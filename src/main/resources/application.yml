@@ -1,0 +1,16 @@
+server:
+  port: 6868
+spring:
+  application:
+    name: booking
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/booking
+    username: root
+    password: bao123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
