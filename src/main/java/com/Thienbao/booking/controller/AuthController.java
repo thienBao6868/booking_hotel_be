@@ -1,6 +1,8 @@
 package com.Thienbao.booking.controller;
 
+import com.Thienbao.booking.payload.request.LoginRequest;
 import com.Thienbao.booking.security.CustomAuthenProvider;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,9 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @GetMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password){
+    public ResponseEntity<?> login(@Valid LoginRequest loginRequest){
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email,password);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
 
         authenticationManager.authenticate(token);
 
