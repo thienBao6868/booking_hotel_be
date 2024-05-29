@@ -13,4 +13,5 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 
-
+api:
+  base-path: /booking/v1

@@ -11,12 +11,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, ApiProperties apiProperties) throws Exception {
+        String basePath = apiProperties.getBasePath();
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author -> {
+                    author.requestMatchers(basePath+ "/auth/login").permitAll();
                     author.anyRequest().authenticated();
                 }).build();
     }
+
 }
