@@ -34,8 +34,10 @@ public class SecurityConfig {
         String basePath = apiProperties.getBasePath();
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author -> {
                     author.requestMatchers(basePath+ "/auth/login").permitAll();
+                    author.requestMatchers( "/booking/v1/user").permitAll();
                     author.anyRequest().authenticated();
                 }).build();
     }

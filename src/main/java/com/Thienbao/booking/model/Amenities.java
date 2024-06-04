@@ -20,7 +20,7 @@ public class Amenities {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "icon")
+    @Column(name = "icon",length = 1900)
     private String icon;
 
     @OneToMany(mappedBy = "amenity")

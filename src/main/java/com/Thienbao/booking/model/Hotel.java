@@ -1,5 +1,6 @@
 package com.Thienbao.booking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,13 +23,14 @@ public class Hotel {
     @Column(name = "name")
     private String name;
 
-    @Column(name="description")
+    @Lob
+    @Column(name="description",columnDefinition = "TEXT")
     private String description;
 
     @Column(name="phone")
     private String phone;
 
-    @Column(name = "isDeleted")
+    @Column(name = "is_deleted")
     private boolean isDeleted;
 
     @Column(name = "open_time")
@@ -46,6 +48,7 @@ public class Hotel {
     @Column(name = "rating")
     private BigDecimal rating;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;

@@ -1,5 +1,6 @@
 package com.Thienbao.booking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class HotelImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+
     @ManyToOne
     @JoinColumn(name = "hotel_id", referencedColumnName = "id")
     private Hotel hotel;
@@ -24,10 +26,10 @@ public class HotelImage {
     @Column(name="image_title")
     private String imageTitle;
 
-    @Column(name = "image_description")
+    @Column(name = "image_description",length = 500)
     private String imageDescription;
 
-    @Column(name = "image_path")
+    @Column(name = "image_path", length = 600)
     private String imagePath;
 
     @Column(name = "upload_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

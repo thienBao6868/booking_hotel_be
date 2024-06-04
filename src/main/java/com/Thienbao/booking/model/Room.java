@@ -23,6 +23,9 @@ public class Room {
     @JoinColumn(name = "roomtype_id",referencedColumnName = "id")
     private RoomType roomType;
 
+    @Column(name="description")
+    private String description;
+
     @Column(name = "price")
     private double price;
 
@@ -30,6 +33,7 @@ public class Room {
     @JoinColumn(name = "hotel_id",referencedColumnName = "id")
     private Hotel hotel;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ROOM_STATUS status = ROOM_STATUS.AVAILABLE;
 

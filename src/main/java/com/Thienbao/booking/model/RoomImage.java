@@ -26,7 +26,7 @@ public class RoomImage {
     @Column(name = "image_description")
     private String imageDescription;
 
-    @Column(name = "image_path")
+    @Column(name = "image_path",length = 600)
     private String imagePath;
 
     @Column(name ="upload_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

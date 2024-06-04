@@ -1,0 +1,19 @@
+package com.Thienbao.booking.dto;
+
+import lombok.Data;
+
+import java.math.BigDecimal;
+import java.time.LocalTime;
+
+@Data
+public class HotelDto {
+    private int id;
+    private String name;
+    private String description;
+    private String phone;
+    private LocalTime openTime;
+    private LocalTime closeTime;
+    private LocalTime checkinTime;
+    private LocalTime checkoutTime;
+    private BigDecimal rating;
+}

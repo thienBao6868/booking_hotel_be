@@ -1,5 +1,6 @@
 package com.Thienbao.booking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -34,6 +36,7 @@ public class Booking {
     @Column(name = "payment_amount")
     private double paymentAmount;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")
     private PAYMENT_STATUS paymentStatus = PAYMENT_STATUS.NOT_TRANSFERRED;
 

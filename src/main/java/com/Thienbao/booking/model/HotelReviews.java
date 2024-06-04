@@ -1,5 +1,6 @@
 package com.Thienbao.booking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +19,11 @@ public class HotelReviews {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+
     @ManyToOne
     @JoinColumn(name = "hotel_id",referencedColumnName = "id")
     private Hotel hotel;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")

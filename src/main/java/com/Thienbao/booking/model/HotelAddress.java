@@ -19,21 +19,19 @@ public class HotelAddress {
     @Column(name="street_number")
     private int streetNumber;
 
-    @Column(name="street_name")
+    @Column(name="street_name", length = 100)
     private String streetName;
 
-    @Column(name = "district")
+    @Column(name = "district",length = 100)
     private String district;
 
-    @Column(name = "city")
+    @Column(name = "city",length = 100)
     private String city;
 
-    @Column(name = "province")
+    @Column(name = "province",length = 100)
     private String province;
 
-    @Column(name = "country")
+    @Column(name = "country", length = 100)
     private String country;
-
-
 
 }

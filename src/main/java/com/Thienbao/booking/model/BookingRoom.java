@@ -22,6 +22,7 @@ public class BookingRoom {
     @JoinColumn(name = "room_id",referencedColumnName = "id")
     private Room room;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private BOOKING_ROOM_STATUS status = BOOKING_ROOM_STATUS.PENDING;
 
