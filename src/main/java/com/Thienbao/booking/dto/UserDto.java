@@ -1,7 +1,6 @@
 package com.Thienbao.booking.dto;
 
-import com.Thienbao.booking.model.Booking;
-import com.Thienbao.booking.model.Hotel;
+
 import com.Thienbao.booking.model.Role;
 import com.Thienbao.booking.model.USER_SEX;
 import lombok.Data;

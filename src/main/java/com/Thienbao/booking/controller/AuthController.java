@@ -2,12 +2,10 @@ package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.payload.request.LoginRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
-import com.Thienbao.booking.security.CustomAuthenProvider;
 import com.Thienbao.booking.service.AuthService;
 import com.Thienbao.booking.utils.JwtHelper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
