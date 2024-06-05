@@ -40,7 +40,7 @@ public class Booking {
     @Column(name = "payment_status", columnDefinition = "ENUM('TRANSFERRED','NOTTRANSFERRED') DEFAULT 'NOTTRANSFERRED'")
     private PAYMENT_STATUS paymentStatus;
 
-    @Column(name = "payment_date")
+    @Column(name = "payment_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime paymentDate;
 
 

@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/bookingApp
     username: root
-    password: bao123
+    password: bao123s
     driver-class-name: com.mysql.cj.jdbc.Driver
 api:
   base-path: /booking/v1

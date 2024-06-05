@@ -23,7 +23,8 @@ public class Room {
     @JoinColumn(name = "roomtype_id",referencedColumnName = "id")
     private RoomType roomType;
 
-    @Column(name="description")
+    @Lob
+    @Column(name="description",columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "price")
