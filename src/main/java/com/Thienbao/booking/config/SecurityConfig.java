@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author -> {
                     author.requestMatchers( basePath + "/auth/login").permitAll();
-                   // author.requestMatchers(  basePath+ "/user").permitAll();
+                    author.requestMatchers(  basePath+ "/user").hasRole("ADMIN");
                     author.anyRequest().authenticated();
                 })
                 .addFilterBefore(customFilterSecurity, UsernamePasswordAuthenticationFilter.class)

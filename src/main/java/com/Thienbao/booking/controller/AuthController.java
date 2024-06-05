@@ -3,6 +3,7 @@ package com.Thienbao.booking.controller;
 import com.Thienbao.booking.payload.request.LoginRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.security.CustomAuthenProvider;
+import com.Thienbao.booking.service.AuthService;
 import com.Thienbao.booking.utils.JwtHelper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    AuthService authService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid LoginRequest loginRequest){
 
@@ -35,13 +39,17 @@ public class AuthController {
 
         authenticationManager.authenticate(token);
 
+        String roleName = authService.getUserByEmail(loginRequest.getEmail()).getRole().getName();
+
+
+
 //        code được thực thi khi authenticate xong
 //        Tận dụng api để tạo ra private-key
 //        SecretKey secretKey = Jwts.SIG.HS256.key().build();
 //        String key = Encoders.BASE64.encode(secretKey.getEncoded());
 //        System.out.println("kiem tra   " + key);
 
-        String authenToken = jwtHelper.generateToken("");
+        String authenToken = jwtHelper.generateToken(roleName);
 
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);

@@ -29,15 +29,14 @@ public class JwtHelper {
                 .compact();
     }
 
-    public boolean decodeToken(String token){
-        boolean isSucess = false;
+    public String decodeToken(String token){
+        String roleName = "";
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
         try{
-            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
-            isSucess=true;
+            roleName = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getSubject();
         }catch(RuntimeException ex){
             System.out.println("Error decode token : " + ex.getMessage());
         }
-        return isSucess;
+        return roleName;
     }
 }
