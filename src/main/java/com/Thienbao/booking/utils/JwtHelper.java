@@ -28,4 +28,16 @@ public class JwtHelper {
                 .expiration(futureDate)
                 .compact();
     }
+
+    public boolean decodeToken(String token){
+        boolean isSucess = false;
+        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
+        try{
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token);
+            isSucess=true;
+        }catch(RuntimeException ex){
+            System.out.println("Error decode token : " + ex.getMessage());
+        }
+        return isSucess;
+    }
 }
