@@ -13,3 +13,5 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 api:
   base-path: /booking/v1
+jwt:
+  private-key: FfG3PlBNWL/602VjrmJlELrzUmCqI6KkHGBv0kR8NPg=

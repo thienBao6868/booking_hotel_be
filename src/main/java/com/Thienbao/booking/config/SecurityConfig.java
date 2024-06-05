@@ -36,8 +36,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author -> {
-                    author.requestMatchers(basePath+ "/auth/login").permitAll();
-                    author.requestMatchers( "/booking/v1/user").permitAll();
+                    author.requestMatchers( basePath + "/auth/login").permitAll();
+                    author.requestMatchers(  basePath+ "/user").permitAll();
                     author.anyRequest().authenticated();
                 }).build();
     }

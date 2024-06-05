@@ -1,4 +1,4 @@
-package com.Thienbao.booking.dto;
+package com.Thienbao.booking.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

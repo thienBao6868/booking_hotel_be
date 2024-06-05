@@ -1,6 +1,6 @@
 package com.Thienbao.booking.controller;
 
-import com.Thienbao.booking.dto.BaseResponse;
+import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.dto.HotelDto;
 import com.Thienbao.booking.dto.UserDto;
 import com.Thienbao.booking.model.Hotel;
@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/booking/v1/user")
+@RequestMapping("${api.base-path}/user")
 public class UserController {
 
     @Autowired
