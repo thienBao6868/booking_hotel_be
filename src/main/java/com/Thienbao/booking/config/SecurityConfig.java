@@ -1,5 +1,6 @@
 package com.Thienbao.booking.config;
 
+import com.Thienbao.booking.filter.CustomFilterSecurity;
 import com.Thienbao.booking.security.CustomAuthenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +32,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, ApiProperties apiProperties) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, ApiProperties apiProperties, CustomFilterSecurity customFilterSecurity) throws Exception {
         String basePath = apiProperties.getBasePath();
         return http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -39,7 +41,9 @@ public class SecurityConfig {
                     author.requestMatchers( basePath + "/auth/login").permitAll();
                     author.requestMatchers(  basePath+ "/user").permitAll();
                     author.anyRequest().authenticated();
-                }).build();
+                })
+                .addFilterBefore(customFilterSecurity, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
 }

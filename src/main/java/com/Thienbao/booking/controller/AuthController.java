@@ -1,7 +1,9 @@
 package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.payload.request.LoginRequest;
+import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.security.CustomAuthenProvider;
+import com.Thienbao.booking.utils.JwtHelper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +25,8 @@ import io.jsonwebtoken.io.Decoders;
 @RequestMapping("${api.base-path}/auth")
 public class AuthController {
 
-    @Value("${jwt.private-key}")
-    private String key;
+    @Autowired
+    JwtHelper jwtHelper;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -36,15 +38,19 @@ public class AuthController {
 
         authenticationManager.authenticate(token);
 
-        //code được thực thi khi authenticate xong
-        // Tận dụng api để tạo ra private-key
+//        code được thực thi khi authenticate xong
+//        Tận dụng api để tạo ra private-key
 //        SecretKey secretKey = Jwts.SIG.HS256.key().build();
 //        String key = Encoders.BASE64.encode(secretKey.getEncoded());
 //        System.out.println("kiem tra   " + key);
 
-        SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
-        String authenToken = Jwts.builder().subject("data").signWith(secretKey).compact();
+        String authenToken = jwtHelper.generateToken("");
 
-        return new ResponseEntity<>(authenToken, HttpStatus.OK);
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("Login success");
+        baseResponse.setData(authenToken);
+
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 }
