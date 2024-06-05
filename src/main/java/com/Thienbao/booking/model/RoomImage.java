@@ -23,7 +23,7 @@ public class RoomImage {
     @Column(name = "image_title")
     private String imageTitle;
 
-    @Column(name = "image_description")
+    @Column(name = "image_description",length = 500)
     private String imageDescription;
 
     @Column(name = "image_path",length = 600)

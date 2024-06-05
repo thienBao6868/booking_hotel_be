@@ -23,13 +23,13 @@ public class BookingRoom {
     private Room room;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private BOOKING_ROOM_STATUS status = BOOKING_ROOM_STATUS.PENDING;
+    @Column(name = "status", columnDefinition = "ENUM('PENDING','CONFIRMED','CHECKIN','CHECKOUT','CANCELLED') DEFAULT 'PENDING'")
+    private BOOKING_ROOM_STATUS status;
 
-    @Column(name = "checkin_date")
+    @Column(name = "checkin_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime checkinDate;
 
-    @Column(name = "checkout_date")
+    @Column(name = "checkout_date",columnDefinition = "TIMESTAMP")
     private LocalDateTime checkoutDate;
 
 }

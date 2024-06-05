@@ -20,17 +20,17 @@ public class Hotel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 100)
     private String name;
 
     @Lob
     @Column(name="description",columnDefinition = "TEXT")
     private String description;
 
-    @Column(name="phone")
+    @Column(name="phone", length = 15)
     private String phone;
 
-    @Column(name = "is_deleted")
+    @Column(name = "is_deleted", columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isDeleted;
 
     @Column(name = "open_time")
@@ -45,7 +45,7 @@ public class Hotel {
     @Column(name = "checkout_time")
     private LocalTime checkoutTime;
 
-    @Column(name = "rating")
+    @Column(name = "rating", columnDefinition = "DECIMAL(2,1)")
     private BigDecimal rating;
 
     @JsonIgnore

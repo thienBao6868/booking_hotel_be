@@ -24,12 +24,11 @@ public class HotelReviews {
     @JoinColumn(name = "hotel_id",referencedColumnName = "id")
     private Hotel hotel;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
 
-    @Column(name = "comment")
+    @Column(name = "comment", length = 500)
     private String comment;
 
     @Column(name = "review_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

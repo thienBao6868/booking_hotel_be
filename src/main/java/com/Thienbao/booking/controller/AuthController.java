@@ -36,25 +36,18 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid LoginRequest loginRequest){
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
-
         authenticationManager.authenticate(token);
-
         String roleName = authService.getUserByEmail(loginRequest.getEmail()).getRole().getName();
-
-
-
 //        code được thực thi khi authenticate xong
 //        Tận dụng api để tạo ra private-key
 //        SecretKey secretKey = Jwts.SIG.HS256.key().build();
 //        String key = Encoders.BASE64.encode(secretKey.getEncoded());
 //        System.out.println("kiem tra   " + key);
-
         String authenToken = jwtHelper.generateToken(roleName);
-
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("Login success");
-        baseResponse.setData(authenToken);
+        baseResponse.setAccessToken(authenToken);
 
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }

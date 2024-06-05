@@ -17,13 +17,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="email")
+    @Column(name="email",length = 100,unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name="fullname")
+    @Column(name="fullname",length = 100)
     private String fullName;
 
     @Column(name = "avatar")
@@ -32,14 +32,14 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "phone")
+    @Column(name = "phone",length = 15)
     private String phone;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sex")
     private USER_SEX sex;
 
-    @Column(name = "is_deleted")
+    @Column(name = "is_deleted",columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isDeleted;
 
     @ManyToOne

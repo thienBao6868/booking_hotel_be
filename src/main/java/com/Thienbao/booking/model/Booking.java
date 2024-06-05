@@ -37,8 +37,8 @@ public class Booking {
     private double paymentAmount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_status")
-    private PAYMENT_STATUS paymentStatus = PAYMENT_STATUS.NOT_TRANSFERRED;
+    @Column(name = "payment_status", columnDefinition = "ENUM('TRANSFERRED','NOTTRANSFERRED') DEFAULT 'NOTTRANSFERRED'")
+    private PAYMENT_STATUS paymentStatus;
 
     @Column(name = "payment_date")
     private LocalDateTime paymentDate;

@@ -34,8 +34,8 @@ public class Room {
     private Hotel hotel;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private ROOM_STATUS status = ROOM_STATUS.AVAILABLE;
+    @Column(name = "status", columnDefinition = "ENUM('AVAILABLE','BOOKED','OCCUPIED','MAINTENANCE','CLEANING') DEFAULT 'AVAILABLE'")
+    private ROOM_STATUS status;
 
     @OneToMany(mappedBy = "room")
     private List<RoomImage> roomImageList;

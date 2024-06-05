@@ -5,9 +5,9 @@ spring:
     name: booking
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/booking
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/bookingApp
     username: root
     password: bao123
     driver-class-name: com.mysql.cj.jdbc.Driver

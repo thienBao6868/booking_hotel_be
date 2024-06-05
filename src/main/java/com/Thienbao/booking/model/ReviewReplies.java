@@ -25,7 +25,7 @@ public class ReviewReplies {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @Column(name = "reply_text")
+    @Column(name = "reply_text", length = 500)
     private String replyText;
 
     @Column(name = "reply_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
