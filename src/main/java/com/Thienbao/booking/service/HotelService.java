@@ -1,5 +1,6 @@
 package com.Thienbao.booking.service;
 
+import com.Thienbao.booking.dto.HotelDetailDto;
 import com.Thienbao.booking.dto.HotelDto;
 import com.Thienbao.booking.dto.HotelListDto;
 import com.Thienbao.booking.mapper.HotelMapper;
@@ -27,6 +28,14 @@ public class HotelService {
             hotelListDto.add(hotelMapper.hotelConvertToHotelListDto(hotel));
         }
         return hotelListDto;
+    }
+
+    public HotelDetailDto getHotelDetail(int id){
+
+        HotelDetailDto hotelDetailDto = new HotelDetailDto();
+        Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new RuntimeException("Not found hotel with id"));
+        return hotelMapper.hotelConvertHotelDetailDto(hotel,hotelDetailDto);
+
     }
 
 
