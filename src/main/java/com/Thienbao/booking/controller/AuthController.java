@@ -1,6 +1,7 @@
 package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.payload.request.LoginRequest;
+import com.Thienbao.booking.payload.request.LogoutRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.service.AuthService;
 import com.Thienbao.booking.utils.JwtHelper;
@@ -10,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Encoders;
@@ -36,11 +40,7 @@ public class AuthController {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
         authenticationManager.authenticate(token);
         String roleName = authService.getUserByEmail(loginRequest.getEmail()).getRole().getName();
-//        code được thực thi khi authenticate xong
-//        Tận dụng api để tạo ra private-key
-//        SecretKey secretKey = Jwts.SIG.HS256.key().build();
-//        String key = Encoders.BASE64.encode(secretKey.getEncoded());
-//        System.out.println("kiem tra   " + key);
+
         String authenToken = jwtHelper.generateToken(roleName);
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
@@ -49,4 +49,10 @@ public class AuthController {
 
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@Valid LogoutRequest logoutRequest){
+        return new ResponseEntity<>("",HttpStatus.OK);
+    }
+
 }

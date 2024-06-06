@@ -23,27 +23,30 @@ public class CustomFilterSecurity extends OncePerRequestFilter {
 
     @Autowired
     JwtHelper jwtHelper;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorValue =  request.getHeader("Authorization");
+        String authorValue = request.getHeader("Authorization");
 
-        if(authorValue != null && authorValue.startsWith("Bearer ")){
+        if (authorValue != null && authorValue.startsWith("Bearer ")) {
             String token = authorValue.substring(7);
-            if(!token.isEmpty()){
-                String roleName  =  jwtHelper.decodeToken(token);
-              if (!roleName.isEmpty()){
-                  List<GrantedAuthority> roleList = new ArrayList<>();
-                  SimpleGrantedAuthority role = new SimpleGrantedAuthority(roleName);
-                  roleList.add(role);
+//            System.out.print(token);
+            if (!token.isEmpty()) {
 
-                  UsernamePasswordAuthenticationToken authenToken = new UsernamePasswordAuthenticationToken("",
-                          "",roleList);
-                  // Tạo chứng thực
-                  SecurityContext context = SecurityContextHolder.getContext();
-                  context.setAuthentication(authenToken);
-              }
+                String roleName = jwtHelper.decodeToken(token);
+                if (!roleName.isEmpty()) {
+                    List<GrantedAuthority> roleList = new ArrayList<>();
+                    SimpleGrantedAuthority role = new SimpleGrantedAuthority(roleName);
+                    roleList.add(role);
+
+                    UsernamePasswordAuthenticationToken authenToken = new UsernamePasswordAuthenticationToken("",
+                            "", roleList);
+                    // Tạo chứng thực
+                    SecurityContext context = SecurityContextHolder.getContext();
+                    context.setAuthentication(authenToken);
+                }
             }
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }
