@@ -36,11 +36,10 @@ public class CustomFilterSecurity extends OncePerRequestFilter {
 
                 DataSecurity dataSecurity = jwtHelper.decodeToken(token);
 
-                if (!dataSecurity.getRoleName().isEmpty()) {
+                if (dataSecurity != null) {
                     List<GrantedAuthority> roleList = new ArrayList<>();
                     SimpleGrantedAuthority role = new SimpleGrantedAuthority(dataSecurity.getRoleName());
                     roleList.add(role);
-                    System.out.print("kiem tra " + dataSecurity.getRoleName());
                     UsernamePasswordAuthenticationToken authenToken = new UsernamePasswordAuthenticationToken(dataSecurity.getEmail(),
                             "", roleList);
                     // Tạo chứng thực
