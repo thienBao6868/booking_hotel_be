@@ -22,7 +22,6 @@ public class HotelController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getHotelById(@PathVariable @Valid @Positive int id){
-
         return new ResponseEntity<>(hotelService.getHotelDetail(id), HttpStatus.OK);
     }
 

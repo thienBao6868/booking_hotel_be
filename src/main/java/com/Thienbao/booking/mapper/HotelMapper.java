@@ -109,10 +109,10 @@ public class HotelMapper {
 
         List<HotelAmenities> hotelAmenities = hotel.getHotelAmenitiesList();
         List<HotelAmenitiesDto> hotelAmenitiesDtoList = new ArrayList<>();
-
         for (HotelAmenities hotelAmenity : hotelAmenities) {
             HotelAmenitiesDto hotelAmenitiesDto = new HotelAmenitiesDto();
-            hotelAmenitiesDto.setAmenity(amenityMapper.convertToAmenitiesDto(hotelAmenity.getAmenity()));
+            hotelAmenitiesDto.setName(hotelAmenity.getAmenity().getName());
+            hotelAmenitiesDto.setIcon(hotelAmenity.getAmenity().getIcon());
             hotelAmenitiesDtoList.add(hotelAmenitiesDto);
         }
         hotelDetailDto.setAmenitiesOfHotel(hotelAmenitiesDtoList);
