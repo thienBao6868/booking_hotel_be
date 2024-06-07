@@ -1,5 +1,6 @@
 package com.Thienbao.booking.filter;
 
+import com.Thienbao.booking.security.DataSecurity;
 import com.Thienbao.booking.utils.JwtHelper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,13 +34,14 @@ public class CustomFilterSecurity extends OncePerRequestFilter {
 //            System.out.print(token);
             if (!token.isEmpty()) {
 
-                String roleName = jwtHelper.decodeToken(token);
-                if (!roleName.isEmpty()) {
-                    List<GrantedAuthority> roleList = new ArrayList<>();
-                    SimpleGrantedAuthority role = new SimpleGrantedAuthority(roleName);
-                    roleList.add(role);
+                DataSecurity dataSecurity = jwtHelper.decodeToken(token);
 
-                    UsernamePasswordAuthenticationToken authenToken = new UsernamePasswordAuthenticationToken("",
+                if (!dataSecurity.getRoleName().isEmpty()) {
+                    List<GrantedAuthority> roleList = new ArrayList<>();
+                    SimpleGrantedAuthority role = new SimpleGrantedAuthority(dataSecurity.getRoleName());
+                    roleList.add(role);
+                    System.out.print("kiem tra " + dataSecurity.getRoleName());
+                    UsernamePasswordAuthenticationToken authenToken = new UsernamePasswordAuthenticationToken(dataSecurity.getEmail(),
                             "", roleList);
                     // Tạo chứng thực
                     SecurityContext context = SecurityContextHolder.getContext();

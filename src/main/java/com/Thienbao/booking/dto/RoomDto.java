@@ -12,4 +12,5 @@ public class RoomDto {
     private RoomTypeDto roomType;
     private double price;
     private ROOM_STATUS status;
+
 }

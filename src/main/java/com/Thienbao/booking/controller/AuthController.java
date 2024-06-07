@@ -3,6 +3,7 @@ package com.Thienbao.booking.controller;
 import com.Thienbao.booking.payload.request.LoginRequest;
 import com.Thienbao.booking.payload.request.LogoutRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
+import com.Thienbao.booking.security.DataSecurity;
 import com.Thienbao.booking.service.AuthService;
 import com.Thienbao.booking.utils.JwtHelper;
 import jakarta.validation.Valid;
@@ -39,9 +40,16 @@ public class AuthController {
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
         authenticationManager.authenticate(token);
+
+
         String roleName = authService.getUserByEmail(loginRequest.getEmail()).getRole().getName();
 
-        String authenToken = jwtHelper.generateToken(roleName);
+        // Logic (add thêm email của client vào token)
+        DataSecurity dataSecurity = new DataSecurity();
+        dataSecurity.setEmail(loginRequest.getEmail());
+        dataSecurity.setRoleName(roleName);
+
+        String authenToken = jwtHelper.generateToken(dataSecurity);
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("Login success");
