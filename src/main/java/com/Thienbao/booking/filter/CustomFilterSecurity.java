@@ -40,7 +40,7 @@ public class CustomFilterSecurity extends OncePerRequestFilter {
                     List<GrantedAuthority> roleList = new ArrayList<>();
                     SimpleGrantedAuthority role = new SimpleGrantedAuthority(dataSecurity.getRoleName());
                     roleList.add(role);
-                    UsernamePasswordAuthenticationToken authenToken = new UsernamePasswordAuthenticationToken(dataSecurity.getEmail(),
+                    UsernamePasswordAuthenticationToken authenToken = new UsernamePasswordAuthenticationToken(dataSecurity,
                             "", roleList);
                     // Tạo chứng thực
                     SecurityContext context = SecurityContextHolder.getContext();

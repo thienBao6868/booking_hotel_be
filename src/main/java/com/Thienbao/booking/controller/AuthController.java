@@ -1,5 +1,6 @@
 package com.Thienbao.booking.controller;
 
+import com.Thienbao.booking.model.User;
 import com.Thienbao.booking.payload.request.LoginRequest;
 import com.Thienbao.booking.payload.request.LogoutRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
@@ -18,7 +19,9 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.web.bind.annotation.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Encoders;
+
 import javax.crypto.SecretKey;
+
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.io.Decoders;
 
@@ -36,18 +39,22 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid LoginRequest loginRequest){
+    public ResponseEntity<?> login(@Valid LoginRequest loginRequest) {
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
         authenticationManager.authenticate(token);
 
 
-        String roleName = authService.getUserByEmail(loginRequest.getEmail()).getRole().getName();
+        // String roleName = authService.getUserByEmail(loginRequest.getEmail()).getRole().getName();
+        User user = authService.getUserByEmail(loginRequest.getEmail());
+        String roleName = user.getRole().getName();
+        Long id = user.getId();
 
         // Logic (add thêm email của client vào token)
         DataSecurity dataSecurity = new DataSecurity();
         dataSecurity.setEmail(loginRequest.getEmail());
         dataSecurity.setRoleName(roleName);
+       dataSecurity.setId(id);
 
         String authenToken = jwtHelper.generateToken(dataSecurity);
         BaseResponse baseResponse = new BaseResponse();
@@ -59,8 +66,8 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@Valid LogoutRequest logoutRequest){
-        return new ResponseEntity<>("",HttpStatus.OK);
+    public ResponseEntity<?> logout(@Valid LogoutRequest logoutRequest) {
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
 }

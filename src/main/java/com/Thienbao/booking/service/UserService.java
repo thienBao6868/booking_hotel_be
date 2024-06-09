@@ -27,7 +27,19 @@ public class UserService {
             System.out.print("Error : " + err);
         }
         return userDto;
+    };
+
+    public UserDto getUserDetail(String email){
+        UserDto userDto = new UserDto();
+        try {
+            User user = userRepository.findByEmail(email);
+            return userDto = userMapper.userConvertToUserDto(user);
+
+        } catch (RuntimeException ex) {
+            String err = ex.getMessage();
+            System.out.print("Error : " + err);
+        }
+        return userDto;
     }
 
-    ;
 }

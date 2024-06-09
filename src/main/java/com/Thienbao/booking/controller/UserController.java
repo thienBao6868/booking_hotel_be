@@ -3,6 +3,7 @@ package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.dto.UserDto;
+import com.Thienbao.booking.security.DataSecurity;
 import com.Thienbao.booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,12 +38,15 @@ public class UserController {
     @CrossOrigin
     @GetMapping("/me")
     public ResponseEntity<?> getMe(){
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = (String) authentication.getPrincipal();
+        DataSecurity dataSecurity =  (DataSecurity) authentication.getPrincipal();
+        String email = dataSecurity.getEmail();
 
-
-
-        return new ResponseEntity<>(email, HttpStatus.OK);
+        UserDto userDto = userService.getUserDetail(email);
+        return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
+
+    // Create user
+    // update user
+
 }

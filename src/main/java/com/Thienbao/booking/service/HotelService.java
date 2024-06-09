@@ -31,12 +31,24 @@ public class HotelService {
     }
 
     public HotelDetailDto getHotelDetail(int id){
-
         HotelDetailDto hotelDetailDto = new HotelDetailDto();
         Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new RuntimeException("Not found hotel with id"));
         return hotelMapper.hotelConvertHotelDetailDto(hotel,hotelDetailDto);
 
     }
 
+    public  List<HotelDetailDto> getHotelsByUserId(Long userId){
+
+        HotelDetailDto hotelDetailDto = new HotelDetailDto();
+        List<HotelDetailDto> hotelDetailDtoList = new ArrayList<>();
+        List<Hotel> hotels = hotelRepository.findByUserId(userId);
+
+        for (Hotel hotel: hotels)
+        {
+
+            hotelDetailDtoList.add(hotelMapper.hotelConvertHotelDetailDto(hotel,hotelDetailDto));
+        }
+        return hotelDetailDtoList;
+    }
 
 }
