@@ -1,5 +1,6 @@
 package com.Thienbao.booking.controller;
 
+import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.repository.HotelRepository;
 import com.Thienbao.booking.security.DataSecurity;
 import com.Thienbao.booking.service.HotelService;
@@ -21,12 +22,24 @@ public class HotelController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getHotels(){
-        return new ResponseEntity<>(hotelService.gethotels(), HttpStatus.OK);
+
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("Get all hotel successful");
+        baseResponse.setData(hotelService.gethotels());
+
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getHotelById(@PathVariable @Valid @Positive int id){
-        return new ResponseEntity<>(hotelService.getHotelDetail(id), HttpStatus.OK);
+
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("Get hotel by Id Successful");
+        baseResponse.setData(hotelService.getHotelDetail(id));
+
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
     @GetMapping("/me")
@@ -37,8 +50,12 @@ public class HotelController {
         DataSecurity dataSecurity = (DataSecurity) authentication.getPrincipal();
         Long currentUserId = dataSecurity.getId();
 
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("Get information hotels with current Hotel_owner Successful");
+        baseResponse.setData(hotelService.getHotelsByUserId(currentUserId));
 
-        return new ResponseEntity<>(hotelService.getHotelsByUserId(currentUserId), HttpStatus.OK);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
 
     }
 

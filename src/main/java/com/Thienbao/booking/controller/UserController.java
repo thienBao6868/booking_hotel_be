@@ -30,7 +30,7 @@ public class UserController {
         UserDto userDto = userService.getUserById(id);
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
-        baseResponse.setMessage("Success");
+        baseResponse.setMessage("Get User By Id Successful");
         baseResponse.setData(userDto);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     };
@@ -43,7 +43,12 @@ public class UserController {
         String email = dataSecurity.getEmail();
 
         UserDto userDto = userService.getUserDetail(email);
-        return new ResponseEntity<>(userDto,HttpStatus.OK);
+
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("Get Current User Successful");
+        baseResponse.setData(userDto);
+        return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }
 
     // Create user
