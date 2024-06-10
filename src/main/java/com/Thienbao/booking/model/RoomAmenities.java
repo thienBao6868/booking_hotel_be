@@ -1,5 +1,6 @@
 package com.Thienbao.booking.model;
 
+import com.Thienbao.booking.model.key.RoomAmenitiesId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,14 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoomAmenities {
 
-    @Id
+    @EmbeddedId
+    private RoomAmenitiesId id;
+
     @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    @JoinColumn(name = "room_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Room room;
 
-    @Id
+
     @ManyToOne
-    @JoinColumn(name = "amenity_id", referencedColumnName = "id")
+    @JoinColumn(name = "amenity_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Amenities amenity;
 
 }

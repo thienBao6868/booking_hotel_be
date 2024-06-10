@@ -1,9 +1,7 @@
 package com.Thienbao.booking.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.Thienbao.booking.model.key.HotelAmenitiesId;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,14 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HotelAmenities {
 
-    @Id
+    @EmbeddedId
+    private HotelAmenitiesId id;
+
     @ManyToOne
-    @JoinColumn(name = "hotel_id",referencedColumnName = "id")
+    @JoinColumn(name = "hotel_id",referencedColumnName = "id", insertable = false, updatable = false)
     private Hotel hotel;
 
-    @Id
+
     @ManyToOne
-    @JoinColumn(name = "amenity_id", referencedColumnName = "id")
+    @JoinColumn(name = "amenity_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Amenities amenity;
 
 

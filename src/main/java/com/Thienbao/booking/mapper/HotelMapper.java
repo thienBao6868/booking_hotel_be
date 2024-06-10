@@ -31,6 +31,7 @@ public class HotelMapper {
         HotelDto hotelDto = new HotelDto();
         hotelDto.setId(hotel.getId());
         hotelDto.setName(hotel.getName());
+        hotelDto.setAvatar(hotel.getAvatar());
         hotelDto.setDescription(hotel.getDescription());
         hotelDto.setPhone(hotel.getPhone());
         hotelDto.setOpenTime(hotel.getOpenTime());
@@ -45,6 +46,7 @@ public class HotelMapper {
         HotelListDto hotelListDto = new HotelListDto();
         hotelListDto.setId(hotel.getId());
         hotelListDto.setName(hotel.getName());
+        hotelListDto.setAvatar(hotel.getAvatar());
         hotelListDto.setDescription(hotel.getDescription());
         hotelListDto.setPhone(hotel.getPhone());
         hotelListDto.setOpenTime(hotel.getOpenTime());
@@ -77,6 +79,7 @@ public class HotelMapper {
 
         hotelDetailDto.setId(hotel.getId());
         hotelDetailDto.setName(hotel.getName());
+        hotelDetailDto.setAvatar(hotel.getAvatar());
         hotelDetailDto.setDescription(hotel.getDescription());
         hotelDetailDto.setPhone(hotel.getPhone());
         hotelDetailDto.setOpenTime(hotel.getOpenTime());

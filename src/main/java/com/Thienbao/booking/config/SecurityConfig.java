@@ -41,6 +41,7 @@ public class SecurityConfig {
                     author.requestMatchers( basePath + "/auth/login").permitAll();
                     author.requestMatchers(basePath+"/hotel/me").hasRole("HOTEL_OWNER");
                     author.requestMatchers(basePath+ "/hotel/all",basePath +"/hotel/{id}").permitAll();
+                    author.requestMatchers(basePath+ "/user").permitAll();
                     author.anyRequest().authenticated();
                 })
                 .addFilterBefore(customFilterSecurity, UsernamePasswordAuthenticationFilter.class)

@@ -9,6 +9,7 @@ import java.time.LocalTime;
 public class HotelDto {
     private int id;
     private String name;
+    private String avatar;
     private String description;
     private String phone;
     private LocalTime openTime;

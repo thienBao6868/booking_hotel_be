@@ -12,6 +12,7 @@ public class HotelReviewMapper {
         hotelReviewDto.setId(hotelReviews.getId());
         hotelReviewDto.setComment(hotelReviews.getComment());
         hotelReviewDto.setReviewDate(hotelReviews.getReviewDate());
+        hotelReviewDto.setNameUser(hotelReviews.getUser().getFullName());
         return hotelReviewDto;
     }
 

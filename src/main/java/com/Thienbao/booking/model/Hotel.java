@@ -23,6 +23,9 @@ public class Hotel {
     @Column(name = "name", length = 100)
     private String name;
 
+    @Column(name = "avatar", length = 600)
+    private String avatar;
+
     @Lob
     @Column(name="description",columnDefinition = "TEXT")
     private String description;
