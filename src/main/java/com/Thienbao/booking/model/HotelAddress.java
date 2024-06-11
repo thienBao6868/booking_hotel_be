@@ -12,7 +12,11 @@ import lombok.NoArgsConstructor;
 public class HotelAddress {
 
     @Id
+    @Column(name = "hotel_id")
+    private int hotelId;
+
     @OneToOne
+    @MapsId
     @JoinColumn(name = "hotel_id", referencedColumnName = "id")
     private Hotel hotel;
 
