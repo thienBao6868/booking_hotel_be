@@ -1,5 +1,6 @@
 package com.Thienbao.booking.security;
 
+import com.Thienbao.booking.exception.NotFoundException;
 import com.Thienbao.booking.model.User;
 import com.Thienbao.booking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CustomAuthenProvider implements AuthenticationProvider {
@@ -25,12 +28,14 @@ public class CustomAuthenProvider implements AuthenticationProvider {
         String email = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        User user = userRepository.findByEmail(email);
-
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return authentication;
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            if (passwordEncoder.matches(password, user.get().getPassword())) {
+                return authentication;
+            }
+        } else {
+            throw new NotFoundException("User not found with email");
         }
-
         return null;
     }
 

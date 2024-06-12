@@ -47,6 +47,7 @@ public class AuthController {
 
         // String roleName = authService.getUserByEmail(loginRequest.getEmail()).getRole().getName();
         User user = authService.getUserByEmail(loginRequest.getEmail());
+
         String roleName = user.getRole().getName();
         Long id = user.getId();
 
