@@ -13,19 +13,19 @@ import java.util.stream.Collectors;
 public class HotelMapper {
 
     @Autowired
-    HotelImageMapper hotelImageMapper;
+    private HotelImageMapper hotelImageMapper;
 
     @Autowired
-    HotelAddressMapper hotelAddressMapper;
+    private HotelAddressMapper hotelAddressMapper;
 
     @Autowired
-    HotelReviewMapper hotelReviewMapper;
+    private HotelReviewMapper hotelReviewMapper;
 
     @Autowired
-    RoomMapper roomMapper;
+    private RoomMapper roomMapper;
 
     @Autowired
-    AmenityMapper amenityMapper;
+    private AmenityMapper amenityMapper;
 
     public HotelDto hotelConvertToHotelDto(Hotel hotel) {
         HotelDto hotelDto = new HotelDto();

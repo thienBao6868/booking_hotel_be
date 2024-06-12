@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email);

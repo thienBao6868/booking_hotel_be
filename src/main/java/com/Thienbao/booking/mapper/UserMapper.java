@@ -14,7 +14,8 @@ import java.util.List;
 @Service
 public class UserMapper {
 
-    @Autowired HotelMapper hotelMapper;
+    @Autowired
+    private HotelMapper hotelMapper;
     public UserDto userConvertToUserDto(User user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());

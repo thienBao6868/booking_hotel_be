@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomMapper {
     @Autowired
-    RoomTypeMapper roomTypeMapper;
+    private RoomTypeMapper roomTypeMapper;
     public RoomDto roomConvertToRoomDto(Room room){
         RoomDto roomDto = new RoomDto();
         roomDto.setId(room.getId());

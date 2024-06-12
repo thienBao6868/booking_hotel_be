@@ -56,7 +56,7 @@ public class Hotel {
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
 
-    @OneToOne(mappedBy = "hotel", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "hotel", cascade = CascadeType.ALL,orphanRemoval = true)
     private HotelAddress HotelAddress;
 
     @OneToMany(mappedBy = "hotel")

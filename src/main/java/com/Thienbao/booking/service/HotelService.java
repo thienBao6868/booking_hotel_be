@@ -16,10 +16,10 @@ import java.util.List;
 public class HotelService {
 
     @Autowired
-    HotelRepository hotelRepository;
+    private HotelRepository hotelRepository;
 
     @Autowired
-    HotelMapper hotelMapper;
+    private HotelMapper hotelMapper;
 
     public List<HotelListDto> gethotels(){
         List<Hotel> hotels = hotelRepository.findAll();

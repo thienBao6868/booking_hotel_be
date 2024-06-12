@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 public class CustomAuthenProvider implements AuthenticationProvider {
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
 
     @Override

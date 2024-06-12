@@ -23,7 +23,7 @@ import java.util.List;
 public class CustomFilterSecurity extends OncePerRequestFilter {
 
     @Autowired
-    JwtHelper jwtHelper;
+    private JwtHelper jwtHelper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
