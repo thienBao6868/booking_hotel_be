@@ -2,6 +2,7 @@ package com.Thienbao.booking.service;
 
 import com.Thienbao.booking.dto.UserDto;
 import com.Thienbao.booking.exception.NotFoundException;
+import com.Thienbao.booking.exception.UpdateException;
 import com.Thienbao.booking.exception.UserAlreadyExistsException;
 import com.Thienbao.booking.mapper.UserMapper;
 import com.Thienbao.booking.model.Role;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Transactional
 @Service
 public class UserService implements UserServiceImp {
 
@@ -77,13 +79,21 @@ public class UserService implements UserServiceImp {
     }
 
     @Override
-    public UserDto updateUser(UpdateUserRequest updateUserRequest) {
-
+    public UserDto updateUser(UpdateUserRequest updateUserRequest, Long currentUserId) {
        boolean isSuccessSaveFile =  fileServiceImp.saveFile(updateUserRequest.getFileAvatar());
-       if(isSuccessSaveFile){
-
-
+       User user = userRepository.findById(currentUserId).orElseThrow(()-> new NotFoundException("Not found user with Id: " + currentUserId));
+       try {
+           if(isSuccessSaveFile){
+               user.setFullName(updateUserRequest.getFullName());
+               user.setAddress(updateUserRequest.getAddress());
+               user.setPhone(updateUserRequest.getPhone());
+               user.setSex(updateUserRequest.getSex());
+               user.setAvatar(updateUserRequest.getFileAvatar().getOriginalFilename());
+           }
+           User newUser = userRepository.save(user);
+           return userMapper.userConvertToUserDto(newUser);
+       }catch (Exception ex){
+            throw new UpdateException("Error update User " + ex.getMessage());
        }
-        return null;
     }
 }

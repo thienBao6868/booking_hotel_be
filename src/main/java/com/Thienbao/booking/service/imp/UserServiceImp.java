@@ -8,5 +8,5 @@ public interface UserServiceImp {
     UserDto getUserDetail(String email);
     UserDto createUser(CreateUserRequest createUserRequest);
 
-    UserDto updateUser(UpdateUserRequest updateUserRequest);
+    UserDto updateUser(UpdateUserRequest updateUserRequest,Long currentUserId);
 }

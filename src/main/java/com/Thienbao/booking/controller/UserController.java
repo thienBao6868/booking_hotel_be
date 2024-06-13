@@ -64,10 +64,16 @@ public class UserController {
     // update user
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(UpdateUserRequest updateUserRequest){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        DataSecurity dataSecurity = (DataSecurity) authentication.getPrincipal();
+        Long currentUserId = dataSecurity.getId();
 
-        userServiceImp.updateUser(updateUserRequest);
+        UserDto userIsUpdate = userServiceImp.updateUser(updateUserRequest,currentUserId);
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(HttpStatus.OK.value());
+        baseResponse.setMessage("update user success");
+        baseResponse.setData(userIsUpdate);
 
-
-        return new ResponseEntity<>("update user success", HttpStatus.OK);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 }

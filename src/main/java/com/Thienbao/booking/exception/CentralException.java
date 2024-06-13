@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class CentralException {
 
-    @ExceptionHandler({RuntimeException.class, MethodArgumentNotValidException.class, NotFoundException.class, UserAlreadyExistsException.class, SaveFileException.class})
+    @ExceptionHandler({RuntimeException.class, MethodArgumentNotValidException.class, NotFoundException.class, UserAlreadyExistsException.class, SaveFileException.class,UpdateException.class})
     public ResponseEntity<?> handleException(Exception e){
         BaseResponse baseResponse = new BaseResponse();
 
         if (e instanceof NotFoundException){
             baseResponse.setStatusCode(HttpStatus.NOT_FOUND.value());
-        }else if (e instanceof SaveFileException){
+        }else if (e instanceof SaveFileException || e instanceof UpdateException){
             baseResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
         }else{
             baseResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
