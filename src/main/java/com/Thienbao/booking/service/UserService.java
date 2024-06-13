@@ -8,14 +8,16 @@ import com.Thienbao.booking.model.Role;
 import com.Thienbao.booking.model.User;
 import com.Thienbao.booking.payload.request.CreateUserRequest;
 import com.Thienbao.booking.repository.UserRepository;
+import com.Thienbao.booking.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserServiceImp {
 
     @Autowired
     private UserRepository userRepository;
@@ -26,7 +28,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+    @Override
     public UserDto getUserDetail(String email) {
         UserDto userDto = new UserDto();
         try {
@@ -42,7 +44,9 @@ public class UserService {
         }
     }
 
-    public boolean createUser(CreateUserRequest createUserRequest) {
+
+    @Override
+    public UserDto createUser(CreateUserRequest createUserRequest) {
 
         Optional<User> user = userRepository.findByEmail(createUserRequest.getEmail());
         if (user.isPresent())
@@ -59,8 +63,8 @@ public class UserService {
             role.setId(createUserRequest.getIdRole());
             newUser.setRole(role);
 
-            userRepository.save(newUser);
-            return true;
+             newUser = userRepository.save(newUser);
+            return userMapper.userConvertToUserDto(newUser);
         }catch (Exception ex){
             throw new RuntimeException("Error create user " + ex.getMessage());
         }

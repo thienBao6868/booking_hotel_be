@@ -26,7 +26,7 @@ public class HotelController {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("Get all hotel successful");
-        baseResponse.setData(hotelService.gethotels());
+        baseResponse.setData(hotelService.getHotels());
 
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }

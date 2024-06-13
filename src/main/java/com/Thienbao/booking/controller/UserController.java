@@ -6,6 +6,7 @@ import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.dto.UserDto;
 import com.Thienbao.booking.security.DataSecurity;
 import com.Thienbao.booking.service.UserService;
+import com.Thienbao.booking.service.imp.UserServiceImp;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImp userServiceImp;
 
 
     @CrossOrigin
@@ -33,7 +34,7 @@ public class UserController {
         DataSecurity dataSecurity = (DataSecurity) authentication.getPrincipal();
         String email = dataSecurity.getEmail();
 
-        UserDto userDto = userService.getUserDetail(email);
+        UserDto userDto = userServiceImp.getUserDetail(email);
 
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
@@ -48,12 +49,12 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@RequestBody @Valid CreateUserRequest createUserRequest) {
 
-        userService.createUser(createUserRequest);
+       UserDto newUser = userServiceImp.createUser(createUserRequest);
 
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("Create User Successful");
-        baseResponse.setData(createUserRequest);
+        baseResponse.setData(newUser);
 
 
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);

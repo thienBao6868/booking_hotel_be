@@ -7,6 +7,7 @@ import com.Thienbao.booking.exception.NotFoundException;
 import com.Thienbao.booking.mapper.HotelMapper;
 import com.Thienbao.booking.model.Hotel;
 import com.Thienbao.booking.repository.HotelRepository;
+import com.Thienbao.booking.service.imp.HotelServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class HotelService {
+public class HotelService implements HotelServiceImp {
 
     @Autowired
     private HotelRepository hotelRepository;
@@ -22,7 +23,8 @@ public class HotelService {
     @Autowired
     private HotelMapper hotelMapper;
 
-    public List<HotelListDto> gethotels(){
+    @Override
+    public List<HotelListDto> getHotels(){
         List<Hotel> hotels = hotelRepository.findAll();
         List<HotelListDto> hotelListDto = new ArrayList<>();
         for(Hotel hotel: hotels){
@@ -31,12 +33,14 @@ public class HotelService {
         return hotelListDto;
     }
 
+    @Override
     public HotelDetailDto getHotelDetail(int id){
         HotelDetailDto hotelDetailDto = new HotelDetailDto();
         Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new NotFoundException("Not found hotel with id"));
         return hotelMapper.hotelConvertHotelDetailDto(hotel,hotelDetailDto);
     }
 
+    @Override
     public  List<HotelDetailDto> getHotelsByUserId(Long userId){
 
         HotelDetailDto hotelDetailDto = new HotelDetailDto();

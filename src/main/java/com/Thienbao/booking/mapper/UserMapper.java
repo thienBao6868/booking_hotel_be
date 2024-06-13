@@ -27,9 +27,10 @@ public class UserMapper {
         userDto.setRole(user.getRole());
         List<Hotel> hotels = user.getHotels();
         List<HotelDto> hotelDtoList = new ArrayList<>();
-
-        for(Hotel hotel : hotels){
-            hotelDtoList.add(hotelMapper.hotelConvertToHotelDto(hotel));
+        if (hotels != null){
+            for(Hotel hotel : hotels){
+                hotelDtoList.add(hotelMapper.hotelConvertToHotelDto(hotel));
+            }
         }
         userDto.setHotels(hotelDtoList);
 

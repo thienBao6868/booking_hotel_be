@@ -57,8 +57,10 @@ public class HotelMapper {
 
         List<HotelImage> hotelImageList = hotel.getHotelImages();
         List<HotelImageDto> hotelImageDtoList = new ArrayList<>();
-        for (HotelImage hotelImage : hotelImageList) {
-            hotelImageDtoList.add(hotelImageMapper.HotelImageConvertToHotelImageDto(hotelImage));
+        if (hotelImageList != null) {
+            for (HotelImage hotelImage : hotelImageList) {
+                hotelImageDtoList.add(hotelImageMapper.HotelImageConvertToHotelImageDto(hotelImage));
+            }
         }
         hotelListDto.setHotelImageDtoList(hotelImageDtoList);
 
@@ -66,8 +68,10 @@ public class HotelMapper {
 
         List<HotelReviews> hotelReviewsList = hotel.getHotelReviews();
         List<HotelReviewDto> hotelReviewDtoList = new ArrayList<>();
-        for (HotelReviews hotelReview : hotelReviewsList) {
-            hotelReviewDtoList.add(hotelReviewMapper.hotelReviewConvertToHotelReviewDto(hotelReview));
+        if(hotelReviewsList != null){
+            for (HotelReviews hotelReview : hotelReviewsList) {
+                hotelReviewDtoList.add(hotelReviewMapper.hotelReviewConvertToHotelReviewDto(hotelReview));
+            }
         }
         hotelListDto.setHotelReviewDtoList(hotelReviewDtoList);
 
