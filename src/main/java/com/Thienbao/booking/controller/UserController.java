@@ -2,6 +2,7 @@ package com.Thienbao.booking.controller;
 
 
 import com.Thienbao.booking.payload.request.CreateUserRequest;
+import com.Thienbao.booking.payload.request.UpdateUserRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.dto.UserDto;
 import com.Thienbao.booking.security.DataSecurity;
@@ -61,5 +62,12 @@ public class UserController {
     }
 
     // update user
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUser(UpdateUserRequest updateUserRequest){
 
+        userServiceImp.updateUser(updateUserRequest);
+
+
+        return new ResponseEntity<>("update user success", HttpStatus.OK);
+    }
 }

@@ -7,8 +7,11 @@ import com.Thienbao.booking.mapper.UserMapper;
 import com.Thienbao.booking.model.Role;
 import com.Thienbao.booking.model.User;
 import com.Thienbao.booking.payload.request.CreateUserRequest;
+import com.Thienbao.booking.payload.request.UpdateUserRequest;
 import com.Thienbao.booking.repository.UserRepository;
+import com.Thienbao.booking.service.imp.FileServiceImp;
 import com.Thienbao.booking.service.imp.UserServiceImp;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,9 @@ public class UserService implements UserServiceImp {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private FileServiceImp fileServiceImp;
+
     @Override
     public UserDto getUserDetail(String email) {
         UserDto userDto = new UserDto();
@@ -46,7 +52,7 @@ public class UserService implements UserServiceImp {
 
 
     @Override
-    public UserDto createUser(CreateUserRequest createUserRequest) {
+    public UserDto createUser(@Valid CreateUserRequest createUserRequest) {
 
         Optional<User> user = userRepository.findByEmail(createUserRequest.getEmail());
         if (user.isPresent())
@@ -68,5 +74,16 @@ public class UserService implements UserServiceImp {
         }catch (Exception ex){
             throw new RuntimeException("Error create user " + ex.getMessage());
         }
+    }
+
+    @Override
+    public UserDto updateUser(UpdateUserRequest updateUserRequest) {
+
+       boolean isSuccessSaveFile =  fileServiceImp.saveFile(updateUserRequest.getFileAvatar());
+       if(isSuccessSaveFile){
+
+
+       }
+        return null;
     }
 }

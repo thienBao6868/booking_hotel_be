@@ -15,3 +15,5 @@ api:
   base-path: /booking/v1
 jwt:
   private-key: FfG3PlBNWL/602VjrmJlELrzUmCqI6KkHGBv0kR8NPg=
+path:
+  save-file: /Users/thienbao/Documents/booking_hotel_project/upload/avatar
