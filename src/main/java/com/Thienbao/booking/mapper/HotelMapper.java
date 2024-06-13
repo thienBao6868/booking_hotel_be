@@ -68,7 +68,7 @@ public class HotelMapper {
 
         List<HotelReviews> hotelReviewsList = hotel.getHotelReviews();
         List<HotelReviewDto> hotelReviewDtoList = new ArrayList<>();
-        if(hotelReviewsList != null){
+        if (hotelReviewsList != null) {
             for (HotelReviews hotelReview : hotelReviewsList) {
                 hotelReviewDtoList.add(hotelReviewMapper.hotelReviewConvertToHotelReviewDto(hotelReview));
             }
@@ -94,35 +94,47 @@ public class HotelMapper {
 
         List<HotelImage> hotelImageList = hotel.getHotelImages();
         List<HotelImageDto> hotelImageDtoList = new ArrayList<>();
-        for (HotelImage hotelImage : hotelImageList) {
-            hotelImageDtoList.add(hotelImageMapper.HotelImageConvertToHotelImageDto(hotelImage));
+        if (hotelImageList != null) {
+            for (HotelImage hotelImage : hotelImageList) {
+                hotelImageDtoList.add(hotelImageMapper.HotelImageConvertToHotelImageDto(hotelImage));
+            }
         }
         hotelDetailDto.setHotelImageDtoList(hotelImageDtoList);
+
         hotelDetailDto.setHotelAddressDto(hotelAddressMapper.hotelAddressConvertTohotelAddressDto(hotel.getHotelAddress()));
 
         List<HotelReviews> hotelReviewsList = hotel.getHotelReviews();
         List<HotelReviewDto> hotelReviewDtoList = new ArrayList<>();
-        for (HotelReviews hotelReview : hotelReviewsList) {
-            hotelReviewDtoList.add(hotelReviewMapper.hotelReviewConvertToHotelReviewDto(hotelReview));
+        if (hotelReviewsList != null) {
+            for (HotelReviews hotelReview : hotelReviewsList) {
+                hotelReviewDtoList.add(hotelReviewMapper.hotelReviewConvertToHotelReviewDto(hotelReview));
+            }
         }
+
         hotelDetailDto.setHotelReviewDtoList(hotelReviewDtoList);
 
         List<Room> roomList = hotel.getRoomList();
         List<RoomDto> roomDtoList = new ArrayList<>();
-        for (Room room : roomList) {
-            roomDtoList.add(roomMapper.roomConvertToRoomDto(room));
+        if(roomList != null){
+            for (Room room : roomList) {
+                roomDtoList.add(roomMapper.roomConvertToRoomDto(room));
+            }
         }
         hotelDetailDto.setRooms(roomDtoList);
 
         List<HotelAmenities> hotelAmenities = hotel.getHotelAmenitiesList();
         List<HotelAmenitiesDto> hotelAmenitiesDtoList = new ArrayList<>();
-        for (HotelAmenities hotelAmenity : hotelAmenities) {
-            HotelAmenitiesDto hotelAmenitiesDto = new HotelAmenitiesDto();
-            hotelAmenitiesDto.setName(hotelAmenity.getAmenity().getName());
-            hotelAmenitiesDto.setIcon(hotelAmenity.getAmenity().getIcon());
-            hotelAmenitiesDtoList.add(hotelAmenitiesDto);
+        if(hotelAmenities != null){
+            for (HotelAmenities hotelAmenity : hotelAmenities) {
+                HotelAmenitiesDto hotelAmenitiesDto = new HotelAmenitiesDto();
+                hotelAmenitiesDto.setName(hotelAmenity.getAmenity().getName());
+                hotelAmenitiesDto.setIcon(hotelAmenity.getAmenity().getIcon());
+                hotelAmenitiesDtoList.add(hotelAmenitiesDto);
+            }
         }
         hotelDetailDto.setAmenitiesOfHotel(hotelAmenitiesDtoList);
+
+
         return hotelDetailDto;
     }
 
