@@ -4,6 +4,7 @@ import com.Thienbao.booking.filter.CustomFilterSecurity;
 import com.Thienbao.booking.security.CustomAuthenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,6 +44,8 @@ public class SecurityConfig {
                     author.requestMatchers(basePath+"/hotel/me").hasRole("HOTEL_OWNER");
                     author.requestMatchers(basePath+ "/hotel/all",basePath +"/hotel/{id}").permitAll();
                     author.requestMatchers(basePath+ "/user").permitAll();
+                    author.requestMatchers(HttpMethod.POST,basePath+"/user/signup").permitAll();
+
                     author.anyRequest().authenticated();
                 })
                 .addFilterBefore(customFilterSecurity, UsernamePasswordAuthenticationFilter.class)

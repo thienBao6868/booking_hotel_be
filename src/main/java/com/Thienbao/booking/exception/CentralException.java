@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class CentralException {
 
-    @ExceptionHandler({RuntimeException.class, MethodArgumentNotValidException.class, NotFoundException.class})
+    @ExceptionHandler({RuntimeException.class, MethodArgumentNotValidException.class, NotFoundException.class, UserAlreadyExistsException.class})
     public ResponseEntity<?> handleException(Exception e){
         BaseResponse baseResponse = new BaseResponse();
 

@@ -3,6 +3,7 @@ package com.Thienbao.booking.service;
 import com.Thienbao.booking.dto.HotelDetailDto;
 import com.Thienbao.booking.dto.HotelDto;
 import com.Thienbao.booking.dto.HotelListDto;
+import com.Thienbao.booking.exception.NotFoundException;
 import com.Thienbao.booking.mapper.HotelMapper;
 import com.Thienbao.booking.model.Hotel;
 import com.Thienbao.booking.repository.HotelRepository;
@@ -32,9 +33,8 @@ public class HotelService {
 
     public HotelDetailDto getHotelDetail(int id){
         HotelDetailDto hotelDetailDto = new HotelDetailDto();
-        Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new RuntimeException("Not found hotel with id"));
+        Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new NotFoundException("Not found hotel with id"));
         return hotelMapper.hotelConvertHotelDetailDto(hotel,hotelDetailDto);
-
     }
 
     public  List<HotelDetailDto> getHotelsByUserId(Long userId){
@@ -45,7 +45,6 @@ public class HotelService {
 
         for (Hotel hotel: hotels)
         {
-
             hotelDetailDtoList.add(hotelMapper.hotelConvertHotelDetailDto(hotel,hotelDetailDto));
         }
         return hotelDetailDtoList;

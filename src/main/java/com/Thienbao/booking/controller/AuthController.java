@@ -30,13 +30,13 @@ import io.jsonwebtoken.io.Decoders;
 public class AuthController {
 
     @Autowired
-    JwtHelper jwtHelper;
+    private JwtHelper jwtHelper;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    AuthService authService;
+    private AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
