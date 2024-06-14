@@ -36,5 +36,9 @@ public class HotelReviews {
 
     @OneToMany(mappedBy = "hotelReview")
     private List<ReviewReplies> reviewReplies;
+    @PrePersist
+    protected void onCreate() {
+        reviewDate = LocalDateTime.now();
+    }
 
 }

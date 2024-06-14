@@ -63,7 +63,7 @@ public class UserController {
 
     // update user
     @PutMapping("/update")
-    public ResponseEntity<?> updateUser(UpdateUserRequest updateUserRequest){
+    public ResponseEntity<?> updateUser(@Valid UpdateUserRequest updateUserRequest){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         DataSecurity dataSecurity = (DataSecurity) authentication.getPrincipal();
         Long currentUserId = dataSecurity.getId();
