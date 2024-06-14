@@ -9,6 +9,5 @@ public class CreateReplyRequest {
     @NotBlank(message = "Reply not null or empty or blank")
     private String reply;
 
-    @NotBlank(message = "Review-Id not null or empty or blank")
     private int reviewId;
 }

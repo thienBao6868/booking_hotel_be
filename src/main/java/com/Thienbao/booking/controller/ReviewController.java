@@ -40,7 +40,7 @@ public class ReviewController {
     };
 
     @PostMapping("/reply")
-    public ResponseEntity<?> createReply(@RequestBody CreateReplyRequest createReplyRequest){
+    public ResponseEntity<?> createReply(@Valid @RequestBody CreateReplyRequest createReplyRequest){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         DataSecurity dataSecurity = (DataSecurity) authentication.getPrincipal();
         Long currenUserId = dataSecurity.getId();
