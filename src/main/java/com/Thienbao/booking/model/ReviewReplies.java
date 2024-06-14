@@ -31,4 +31,8 @@ public class ReviewReplies {
     @Column(name = "reply_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime replyDate;
 
+    @PrePersist
+    protected void onCreate() {
+        replyDate = LocalDateTime.now();
+    }
 }

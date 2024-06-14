@@ -41,11 +41,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(author -> {
                     author.requestMatchers( basePath + "/auth/login").permitAll();
                     author.requestMatchers(basePath+"/admin/**").hasRole("ADMIN");
-                    author.requestMatchers(basePath+"/hotel/me").hasRole("HOTEL_OWNER");
+                    author.requestMatchers(basePath+"/hotel/me",basePath+"/review/reply").hasRole("HOTEL_OWNER");
                     author.requestMatchers(basePath+ "/hotel/all",basePath +"/hotel/{id}").permitAll();
                     author.requestMatchers(basePath+ "/user").permitAll();
                     author.requestMatchers(HttpMethod.POST,basePath+"/user/signup").permitAll();
-
                     author.anyRequest().authenticated();
                 })
                 .addFilterBefore(customFilterSecurity, UsernamePasswordAuthenticationFilter.class)

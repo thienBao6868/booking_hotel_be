@@ -7,6 +7,7 @@ import com.Thienbao.booking.mapper.HotelReviewMapper;
 import com.Thienbao.booking.model.Hotel;
 import com.Thienbao.booking.model.HotelReviews;
 import com.Thienbao.booking.model.User;
+import com.Thienbao.booking.payload.request.CreateReplyRequest;
 import com.Thienbao.booking.payload.request.CreateReviewRequest;
 import com.Thienbao.booking.repository.HotelRepository;
 import com.Thienbao.booking.repository.HotelReviewRepository;
@@ -61,5 +62,15 @@ public class ReviewService implements ReviewServiceImp {
 
         return hotelReviewMapper.hotelReviewConvertToHotelReviewDto(newHotelReview);
 
-    };
+    }
+
+    @Override
+    public boolean createReply(CreateReplyRequest createReplyRequest, Long currentUserId) {
+
+
+
+        return false;
+    }
+
+    ;
 }
