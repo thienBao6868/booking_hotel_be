@@ -41,7 +41,7 @@ public class ReviewController {
     @GetMapping("/hotelier/{hotelId}")
     public ResponseEntity<?> getReviewsByHotelier(@PathVariable int hotelId) {
         Long currenUserId = helper.getCurrentUserId();
-        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "Get reviews by hotelier successful", currenUserId , null);
+        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "Get reviews by hotelier successful", reviewServiceImp.getReviewsByHotelier(hotelId,currenUserId) , null);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     };
 }

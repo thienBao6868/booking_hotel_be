@@ -1,6 +1,7 @@
 package com.Thienbao.booking.service;
 
 import com.Thienbao.booking.dto.HotelReviewDto;
+import com.Thienbao.booking.dto.HotelReviewListDto;
 import com.Thienbao.booking.dto.ReviewReplyDto;
 import com.Thienbao.booking.exception.*;
 import com.Thienbao.booking.mapper.HotelReviewMapper;
@@ -21,6 +22,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -106,5 +108,27 @@ public class ReviewService implements ReviewServiceImp {
         }catch (Exception ex){
             throw new CreateException("Error create reply: " + ex.getMessage());
         }
+    }
+
+    @Override
+    public List<HotelReviewListDto> getReviewsByHotelier(int hotelId, Long currentUserId) {
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new NotFoundException("Not found Hotel with Id: " + hotelId));
+        if(!currentUserId.equals(hotel.getUser().getId())) throw new UserAlreadyReviewException("The user must be the owner of the hotel");
+
+        try{
+            List<HotelReviews> hotelReviews = hotel.getHotelReviews();
+            List<HotelReviewListDto> hotelReviewListDtoList = new ArrayList<>();
+
+            hotelReviews.forEach(item ->{
+                hotelReviewListDtoList.add(hotelReviewMapper.hotelReviewConvertToHotelReviewListDto(item));
+            });
+            return hotelReviewListDtoList;
+        }catch (Exception ex){
+            throw new NotFoundException("Error get Reviews with hotelier: "+ ex.getMessage());
+        }
+
     };
+
+
+
 }
