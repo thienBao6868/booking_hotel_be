@@ -17,4 +17,5 @@ public class HotelDto {
     private LocalTime checkinTime;
     private LocalTime checkoutTime;
     private BigDecimal rating;
+    private boolean isDeleted;
 }

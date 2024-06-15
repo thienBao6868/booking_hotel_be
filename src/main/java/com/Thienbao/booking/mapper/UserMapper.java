@@ -26,6 +26,7 @@ public class UserMapper {
         userDto.setSex(user.getSex());
         userDto.setAddress(user.getAddress());
         userDto.setRole(user.getRole());
+        userDto.setDeleted(user.isDeleted());
         List<Hotel> hotels = user.getHotels();
         List<HotelDto> hotelDtoList = new ArrayList<>();
         if (hotels != null){

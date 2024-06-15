@@ -39,6 +39,7 @@ public class HotelMapper {
         hotelDto.setCheckinTime(hotel.getCheckinTime());
         hotelDto.setCheckoutTime(hotel.getCheckoutTime());
         hotelDto.setRating(hotel.getRating());
+        hotelDto.setDeleted(hotel.isDeleted());
         return hotelDto;
     }
 
@@ -54,6 +55,7 @@ public class HotelMapper {
         hotelListDto.setCheckinTime(hotel.getCheckinTime());
         hotelListDto.setCheckoutTime(hotel.getCheckoutTime());
         hotelListDto.setRating(hotel.getRating());
+        hotelListDto.setDeleted(hotel.isDeleted());
 
         List<HotelImage> hotelImageList = hotel.getHotelImages();
         List<HotelImageDto> hotelImageDtoList = new ArrayList<>();
@@ -91,6 +93,7 @@ public class HotelMapper {
         hotelDetailDto.setCheckinTime(hotel.getCheckinTime());
         hotelDetailDto.setCheckoutTime(hotel.getCheckoutTime());
         hotelDetailDto.setRating(hotel.getRating());
+        hotelDetailDto.setDeleted(hotel.isDeleted());
 
         List<HotelImage> hotelImageList = hotel.getHotelImages();
         List<HotelImageDto> hotelImageDtoList = new ArrayList<>();
