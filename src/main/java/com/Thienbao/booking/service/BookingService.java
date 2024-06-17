@@ -1,10 +1,13 @@
 package com.Thienbao.booking.service;
 
 import com.Thienbao.booking.dto.BookingDto;
+import com.Thienbao.booking.dto.BookingListDto;
+import com.Thienbao.booking.dto.BookingListOfHotelierDto;
 import com.Thienbao.booking.dto.BookingRoomDto;
 import com.Thienbao.booking.exception.BadRequestException;
 import com.Thienbao.booking.exception.CreateException;
 import com.Thienbao.booking.exception.NotFoundException;
+import com.Thienbao.booking.exception.UserAlreadyReviewException;
 import com.Thienbao.booking.mapper.BookingMapper;
 import com.Thienbao.booking.mapper.BookingRoomMapper;
 import com.Thienbao.booking.model.*;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,5 +98,32 @@ public class BookingService implements BookingServiceImp {
             throw new CreateException("Error create booking: " + ex.getMessage());
         }
 
+    }
+
+    @Override
+    public List<BookingListDto> getBookingsByUser(Long currentUser) {
+       List<Booking> bookings = bookingRepository.findByUserId(currentUser);
+       if(bookings.isEmpty()) throw new NotFoundException("The user has not made any reservations");
+
+       List<BookingListDto> bookingListDtoList = new ArrayList<>();
+       bookings.forEach(item -> {
+            bookingListDtoList.add(bookingMapper.convertToBookingListDto(item));
+       });
+
+       return bookingListDtoList;
+    }
+
+    @Override
+    public List<BookingListOfHotelierDto> getBookingsByHotelier(Long currentUserId, int hotelId) {
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(() -> new NotFoundException("Not found hotel with id: " + hotelId));
+        if(!currentUserId.equals(hotel.getUser().getId())) throw new UserAlreadyReviewException("The user must be the owner of the hotel");
+        List<Booking> bookings = bookingRepository.findByHotelId(hotelId);
+        if(bookings.isEmpty()) throw new NotFoundException("The hotel has no bookings yet");
+        List<BookingListOfHotelierDto> bookingListOfHotelierDtos  = new ArrayList<>();
+        bookings.forEach(item -> {
+           bookingListOfHotelierDtos.add(bookingMapper.convertToBookingListOfHotelierDto(item));
+        });
+
+        return bookingListOfHotelierDtos;
     };
 }

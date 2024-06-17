@@ -43,7 +43,6 @@ public class Booking {
     @Column(name = "payment_date", columnDefinition = "TIMESTAMP")
     private LocalDateTime paymentDate;
 
-
     @OneToMany(mappedBy = "booking")
     private List<BookingRoom> bookingRoomList;
 

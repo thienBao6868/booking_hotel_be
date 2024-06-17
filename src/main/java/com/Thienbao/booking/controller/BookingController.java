@@ -5,13 +5,11 @@ import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.service.imp.BookingServiceImp;
 import com.Thienbao.booking.utils.Helper;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("${api.base-path}/booking")
@@ -30,9 +28,27 @@ public class BookingController {
         BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "create booking successful",bookingServiceImp.createBooking(request,currentUserId), null);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     };
-    // cancelBooking
-    // getBookings
+
+
+
+    // getBookings by User
+    @GetMapping("/user")
+    public ResponseEntity<?> getBookingByUser(){
+        Long currentUserId = helper.getCurrentUserId();
+        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "Get bookings by User successful",bookingServiceImp.getBookingsByUser(currentUserId), null);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    };
+
     // getBookingByHotelier
+    @GetMapping("/hotel/{hotelId}")
+    public ResponseEntity<?> getBookingByHotelier(@PathVariable int hotelId){
+        Long currentUserId = helper.getCurrentUserId();
+        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "Get bookings by Hotelier successful",bookingServiceImp.getBookingsByHotelier(currentUserId,hotelId), null);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    };
+
     // getDetailBooking
+    // cancelBooking
     // paymentBooking
+
 }
