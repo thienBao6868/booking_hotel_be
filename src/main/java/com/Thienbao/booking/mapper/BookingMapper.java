@@ -1,9 +1,6 @@
 package com.Thienbao.booking.mapper;
 
-import com.Thienbao.booking.dto.BookingDto;
-import com.Thienbao.booking.dto.BookingListDto;
-import com.Thienbao.booking.dto.BookingListOfHotelierDto;
-import com.Thienbao.booking.dto.BookingRoomDto;
+import com.Thienbao.booking.dto.*;
 import com.Thienbao.booking.model.Booking;
 import com.Thienbao.booking.model.BookingRoom;
 import com.Thienbao.booking.model.Room;
@@ -78,5 +75,25 @@ public class BookingMapper {
         bookingListOfHotelierDto.setBookingRoomList(bookingRoomDtos);
 
         return bookingListOfHotelierDto;
+    }
+    public BookingDetailDto convertToBookingDetailDto(Booking booking){
+        BookingDetailDto bookingDetailDto = new BookingDetailDto();
+        bookingDetailDto.setUser(userMapper.userConvertToUserDto(booking.getUser()));
+        bookingDetailDto.setHotel(hotelMapper.hotelConvertToHotelDto(booking.getHotel()));
+        bookingDetailDto.setBookingDate(booking.getBookingDate());
+        bookingDetailDto.setTotalPrice(booking.getTotalPrice());
+        bookingDetailDto.setPaymentAmount(booking.getPaymentAmount());
+        bookingDetailDto.setPaymentStatus(booking.getPaymentStatus());
+        bookingDetailDto.setPaymentDate(booking.getPaymentDate());
+
+        List<BookingRoom> bookingRooms = booking.getBookingRoomList();
+        List<BookingRoomDto> bookingRoomDtos = new ArrayList<>();
+
+        bookingRooms.forEach(item -> {
+            bookingRoomDtos.add(bookingRoomMapper.convertToBookingRoomDto(item));
+        });
+        bookingDetailDto.setBookingRoomList(bookingRoomDtos);
+
+        return bookingDetailDto;
     }
 }

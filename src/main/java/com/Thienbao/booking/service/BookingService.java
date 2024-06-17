@@ -1,9 +1,6 @@
 package com.Thienbao.booking.service;
 
-import com.Thienbao.booking.dto.BookingDto;
-import com.Thienbao.booking.dto.BookingListDto;
-import com.Thienbao.booking.dto.BookingListOfHotelierDto;
-import com.Thienbao.booking.dto.BookingRoomDto;
+import com.Thienbao.booking.dto.*;
 import com.Thienbao.booking.exception.BadRequestException;
 import com.Thienbao.booking.exception.CreateException;
 import com.Thienbao.booking.exception.NotFoundException;
@@ -51,13 +48,13 @@ public class BookingService implements BookingServiceImp {
 
     @Transactional
     @Override
-    public BookingDto createBooking(CreateBookingRequest request, Long currentUser) {
+    public BookingDto createBooking(CreateBookingRequest request, Long currentUserId) {
 
         LocalDate checkinDate = dateUtils.convertStringToLocalDate(request.getCheckinDate());
         LocalDate checkoutDate = dateUtils.convertStringToLocalDate(request.getCheckoutDate());
         if(!checkoutDate.isAfter(checkinDate)) throw new BadRequestException("check out date must be after check in date");
 
-        User user = userRepository.findById(currentUser).orElseThrow(() -> new NotFoundException("Not found user with id: " + currentUser));
+        User user = userRepository.findById(currentUserId).orElseThrow(() -> new NotFoundException("Not found user with id: " + currentUserId));
         Hotel hotel = hotelRepository.findById(request.getHotelId()).orElseThrow(() -> new NotFoundException("Not found hotel with id: " + request.getHotelId()));
         List<Room> rooms = hotel.getRoomList();
 //        if (rooms.stream().noneMatch(room -> room.getId() == request.getRoomId()))
@@ -101,8 +98,8 @@ public class BookingService implements BookingServiceImp {
     }
 
     @Override
-    public List<BookingListDto> getBookingsByUser(Long currentUser) {
-       List<Booking> bookings = bookingRepository.findByUserId(currentUser);
+    public List<BookingListDto> getBookingsByUser(Long currentUserId) {
+       List<Booking> bookings = bookingRepository.findByUserId(currentUserId);
        if(bookings.isEmpty()) throw new NotFoundException("The user has not made any reservations");
 
        List<BookingListDto> bookingListDtoList = new ArrayList<>();
@@ -125,5 +122,13 @@ public class BookingService implements BookingServiceImp {
         });
 
         return bookingListOfHotelierDtos;
+    }
+
+    @Override
+    public BookingDetailDto getDetailBooking(Long currentUserId, int bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(()-> new NotFoundException("Not found booking with booking Id: "+ bookingId));
+        return bookingMapper.convertToBookingDetailDto(booking);
     };
+
+
 }

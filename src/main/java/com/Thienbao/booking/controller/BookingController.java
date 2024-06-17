@@ -48,7 +48,16 @@ public class BookingController {
     };
 
     // getDetailBooking
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<?> getDetailBooking(@PathVariable int bookingId){
+        Long currentUserId = helper.getCurrentUserId();
+        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "Get detail booking successful",bookingServiceImp.getDetailBooking(currentUserId,bookingId), null);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    };
+
     // cancelBooking
+
+
     // paymentBooking
 
 }
