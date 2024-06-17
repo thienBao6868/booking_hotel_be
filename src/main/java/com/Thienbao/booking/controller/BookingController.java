@@ -29,9 +29,7 @@ public class BookingController {
         Long currentUserId = helper.getCurrentUserId();
         BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "create booking successful",bookingServiceImp.createBooking(request,currentUserId), null);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
-    }
-
-    ;
+    };
     // cancelBooking
     // getBookings
     // getBookingByHotelier

@@ -1,8 +1,12 @@
 package com.Thienbao.booking.service;
 
+import com.Thienbao.booking.dto.BookingDto;
+import com.Thienbao.booking.dto.BookingRoomDto;
 import com.Thienbao.booking.exception.BadRequestException;
 import com.Thienbao.booking.exception.CreateException;
 import com.Thienbao.booking.exception.NotFoundException;
+import com.Thienbao.booking.mapper.BookingMapper;
+import com.Thienbao.booking.mapper.BookingRoomMapper;
 import com.Thienbao.booking.model.*;
 import com.Thienbao.booking.model.key.BookingRoomId;
 import com.Thienbao.booking.payload.request.CreateBookingRequest;
@@ -36,9 +40,14 @@ public class BookingService implements BookingServiceImp {
     @Autowired
     private DateUtils dateUtils;
 
+    @Autowired
+    private BookingMapper bookingMapper;
+
+
+
     @Transactional
     @Override
-    public boolean createBooking(CreateBookingRequest request, Long currentUser) {
+    public BookingDto createBooking(CreateBookingRequest request, Long currentUser) {
 
         LocalDate checkinDate = dateUtils.convertStringToLocalDate(request.getCheckinDate());
         LocalDate checkoutDate = dateUtils.convertStringToLocalDate(request.getCheckoutDate());
@@ -72,18 +81,18 @@ public class BookingService implements BookingServiceImp {
             bookingRoomId.setRoomId(request.getRoomId());
 
             bookingRoom.setBookingRoomId(bookingRoomId);
+            bookingRoom.setRoom(room.get());
             bookingRoom.setStatus(BOOKING_ROOM_STATUS.PENDING);
             bookingRoom.setCheckinDate(checkinDate);
             bookingRoom.setCheckoutDate(checkoutDate);
 
-            bookingRoomRepository.save(bookingRoom);
+            BookingRoom newBookingRoom = bookingRoomRepository.save(bookingRoom);
 
-            return  true;
+            return bookingMapper.convertToBookingDto(newBooking,newBookingRoom);
 
         } catch (Exception ex) {
             throw new CreateException("Error create booking: " + ex.getMessage());
         }
-
 
     };
 }
