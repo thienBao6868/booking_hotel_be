@@ -17,13 +17,13 @@ public class CreateBookingRequest {
     @NotNull(message = "Id room not null")
     private int roomId;
 
-    @NotBlank(message = "Checkin time cannot be blank")
-    @ValidDateTimeFormat(pattern = "dd/MM/yyyy HH:mm", message = "Invalid date-time format. Expected format: dd/MM/yyyy HH:mm")
-    private String checkinTime;
+    @NotBlank(message = "Checkin Date cannot be blank")
+    @ValidDateTimeFormat(pattern = "yyyy-MM-dd", message = "Invalid date-time format. Expected format: yyyy-MM-dd")
+    private String checkinDate;
 
-    @NotBlank(message = "Checkin out cannot be blank")
-    @ValidDateTimeFormat(pattern = "dd/MM/yyyy HH:mm", message = "Invalid date-time format. Expected format: dd/MM/yyyy HH:mm")
-    private String checkoutTime;
+    @NotBlank(message = "Checkout Date cannot be blank")
+    @ValidDateTimeFormat(pattern = "yyyy-MM-dd", message = "Invalid date-time format. Expected format: yyyy-MM-dd")
+    private String checkoutDate;
 
     @NotNull(message = "payment Amount not null")
     private double paymentAmount;

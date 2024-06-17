@@ -16,7 +16,7 @@ public class CentralException {
 
         if (e instanceof NotFoundException) {
             baseResponse.setStatusCode(HttpStatus.NOT_FOUND.value());
-        } else if (e instanceof SaveFileException || e instanceof UpdateException || e instanceof UserAlreadyReviewException || e instanceof UserAlreadyReplyException || e instanceof ReplyAlreadyExistsException || e instanceof CreateException) {
+        } else if (e instanceof SaveFileException || e instanceof UpdateException || e instanceof UserAlreadyReviewException || e instanceof UserAlreadyReplyException || e instanceof ReplyAlreadyExistsException || e instanceof CreateException || e instanceof BadRequestException) {
             baseResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
         } else {
             baseResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());

@@ -1,10 +1,12 @@
 package com.Thienbao.booking.model;
 
+import com.Thienbao.booking.model.key.BookingRoomId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "booking_room")
@@ -12,14 +14,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingRoom {
-    @Id
+
+    @EmbeddedId
+    private BookingRoomId bookingRoomId;
+
     @ManyToOne
-    @JoinColumn(name = "booking_id", referencedColumnName = "id")
+    @JoinColumn(name = "booking_id", referencedColumnName = "id",insertable = false,updatable = false)
     private Booking booking;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "room_id",referencedColumnName = "id")
+    @JoinColumn(name = "room_id",referencedColumnName = "id",insertable = false,updatable = false)
     private Room room;
 
     @Enumerated(EnumType.STRING)
@@ -27,9 +31,9 @@ public class BookingRoom {
     private BOOKING_ROOM_STATUS status;
 
     @Column(name = "checkin_date", columnDefinition = "TIMESTAMP")
-    private LocalDateTime checkinDate;
+    private LocalDate checkinDate;
 
     @Column(name = "checkout_date",columnDefinition = "TIMESTAMP")
-    private LocalDateTime checkoutDate;
+    private LocalDate checkoutDate;
 
 }

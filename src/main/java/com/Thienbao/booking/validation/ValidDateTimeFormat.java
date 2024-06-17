@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDateTimeFormat {
-    String message() default "Invalid date-time format. Expected format: dd/MM/yyyy HH:mm";
+    String message() default "Invalid date-time format. Expected format: yyyy-MM-dd";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    String pattern() default "dd/MM/yyyy HH:mm";
+    String pattern() default "yyyy-MM-dd";
 }

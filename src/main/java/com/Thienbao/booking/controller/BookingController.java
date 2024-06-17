@@ -2,6 +2,7 @@ package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.payload.request.CreateBookingRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
+import com.Thienbao.booking.service.imp.BookingServiceImp;
 import com.Thienbao.booking.utils.Helper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,14 @@ public class BookingController {
     @Autowired
     private Helper helper;
 
+    @Autowired
+    private BookingServiceImp bookingServiceImp;
+
     //create Booking
     @PostMapping("/create-booking")
     public ResponseEntity<?> createBooking(@Valid @RequestBody CreateBookingRequest request) {
         Long currentUserId = helper.getCurrentUserId();
-        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "create booking successful", request, null);
+        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "create booking successful",bookingServiceImp.createBooking(request,currentUserId), null);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 

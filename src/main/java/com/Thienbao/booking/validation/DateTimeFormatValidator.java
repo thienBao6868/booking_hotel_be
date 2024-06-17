@@ -3,6 +3,7 @@ package com.Thienbao.booking.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -16,13 +17,13 @@ public class DateTimeFormatValidator  implements ConstraintValidator<ValidDateTi
     }
 
     @Override
-    public boolean isValid(String dateTimeStr, ConstraintValidatorContext context) {
-        if (dateTimeStr == null || dateTimeStr.isEmpty()) {
+    public boolean isValid(String dateStr, ConstraintValidatorContext context) {
+        if (dateStr == null || dateStr.isEmpty()) {
             return false;
         }
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-            LocalDateTime.parse(dateTimeStr, formatter);
+            LocalDate.parse(dateStr, formatter);
             return true;
         } catch (DateTimeParseException e) {
             return false;
