@@ -1,5 +1,6 @@
 package com.Thienbao.booking.controller;
 
+import com.Thienbao.booking.payload.request.CancelBookingRequest;
 import com.Thienbao.booking.payload.request.CreateBookingRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.service.imp.BookingServiceImp;
@@ -56,8 +57,16 @@ public class BookingController {
     };
 
     // cancelBooking
+    @PutMapping("")
+    public ResponseEntity<?> cancelBooking(@Valid @RequestBody CancelBookingRequest request){
+        Long currentUserId = helper.getCurrentUserId();
+        BaseResponse baseResponse = new BaseResponse(HttpStatus.OK.value(), "cancel booking successful",bookingServiceImp.cancelBooking(request), null);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    };
+
+    // update Booking
 
 
-    // paymentBooking
+
 
 }

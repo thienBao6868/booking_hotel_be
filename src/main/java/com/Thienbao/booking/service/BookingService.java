@@ -9,6 +9,7 @@ import com.Thienbao.booking.mapper.BookingMapper;
 import com.Thienbao.booking.mapper.BookingRoomMapper;
 import com.Thienbao.booking.model.*;
 import com.Thienbao.booking.model.key.BookingRoomId;
+import com.Thienbao.booking.payload.request.CancelBookingRequest;
 import com.Thienbao.booking.payload.request.CreateBookingRequest;
 import com.Thienbao.booking.repository.*;
 import com.Thienbao.booking.service.imp.BookingServiceImp;
@@ -128,6 +129,19 @@ public class BookingService implements BookingServiceImp {
     public BookingDetailDto getDetailBooking(Long currentUserId, int bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(()-> new NotFoundException("Not found booking with booking Id: "+ bookingId));
         return bookingMapper.convertToBookingDetailDto(booking);
+    }
+
+    @Override
+    public boolean cancelBooking(CancelBookingRequest request) {
+
+        BookingRoom bookingRoom = bookingRoomRepository.findByBookingIdAndRoomId(request.getBookingId(), request.getRoomId());
+        if(bookingRoom == null) throw new NotFoundException("Not found booking room with booking id and roomId");
+
+        bookingRoom.setStatus(BOOKING_ROOM_STATUS.CANCELLED);
+
+       bookingRoomRepository.save(bookingRoom);
+
+        return true;
     };
 
 
