@@ -1,9 +1,14 @@
 package com.Thienbao.booking.controller;
 
+import com.Thienbao.booking.model.Hotel;
+import com.Thienbao.booking.payload.request.InsertHotelRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.repository.HotelRepository;
 import com.Thienbao.booking.security.DataSecurity;
 import com.Thienbao.booking.service.HotelService;
+import com.Thienbao.booking.service.imp.HotelServiceImp;
+import com.Thienbao.booking.utils.Helper;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +20,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("${api.base-path}/hotel")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class HotelController {
 
     @Autowired
     private HotelService hotelService;
+    @Autowired
+    private HotelServiceImp hotelServiceImp;
+    @Autowired
+    private Helper helper;
 
     @GetMapping("/all")
     public ResponseEntity<?> getHotels(){
@@ -60,9 +70,24 @@ public class HotelController {
     }
 
     // Create hotel
-    // Update hotel
-    // Create Room
-    // update Room
+    @PostMapping
+    public ResponseEntity<?> insertHotel(HttpServletRequest request, InsertHotelRequest hotelRequest){
 
+        System.out.println(hotelRequest.getCheckOutTime());
+        Hotel hotel = hotelServiceImp.insertHotel(request,hotelRequest);
+        return new ResponseEntity<>(hotel,HttpStatus.OK);
+    }
+
+    @PostMapping("/test")
+    public ResponseEntity<?> insertHotel1(HttpServletRequest request, InsertHotelRequest hotelRequest) {
+
+
+        System.out.println(hotelRequest.getOpenTime());
+
+        return new ResponseEntity<>(hotelRequest.getCountry(), HttpStatus.OK);
+        // Update hotel
+        // Create Room
+        // update Room
+    }
 
 }
