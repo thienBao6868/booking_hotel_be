@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,7 +44,16 @@ public class RoomTypeService implements RoomTypeServiceImp {
 
     @Override
     public List<RoomTypeDto> getAllRoomType(HttpServletRequest request) {
-        return null;
+        List<RoomType> listRoomTypeEntity = roomTypeRepository.findAll();
+        List<RoomTypeDto> listDto = new ArrayList<>();
+        listRoomTypeEntity.forEach(item ->{
+            RoomTypeDto roomTypeDto = new RoomTypeDto();
+            roomTypeDto.setId(item.getId());
+            roomTypeDto.setName(item.getName());
+
+            listDto.add(roomTypeDto);
+        });
+        return listDto;
     }
 
     @Override
