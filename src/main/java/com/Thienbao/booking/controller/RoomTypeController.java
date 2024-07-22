@@ -3,6 +3,7 @@ package com.Thienbao.booking.controller;
 import com.Thienbao.booking.dto.RoomTypeDto;
 import com.Thienbao.booking.model.RoomType;
 import com.Thienbao.booking.payload.request.InsertRoomTypeRequest;
+import com.Thienbao.booking.payload.request.UpdateRoomTypeRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.service.imp.RoomTypeServiceImp;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,5 +38,12 @@ public class RoomTypeController {
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
 
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateRoomType(HttpServletRequest request , @RequestBody UpdateRoomTypeRequest updateRoomTypeRequest , @PathVariable int id){
+
+            RoomType roomType = roomTypeServiceImp.updateRoomType(request, updateRoomTypeRequest, id);
+            BaseResponse baseResponse = BaseResponse.successBaseResponse(updateRoomTypeRequest , "Cập nhật thành công");
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        }
 
 }

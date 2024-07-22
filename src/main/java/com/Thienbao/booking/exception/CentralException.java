@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class CentralException {
 
-    @ExceptionHandler({RuntimeException.class, MethodArgumentNotValidException.class, NotFoundException.class, UserAlreadyExistsException.class, SaveFileException.class, UpdateException.class, UserAlreadyReviewException.class, UserAlreadyReplyException.class, ReplyAlreadyExistsException.class, CreateException.class , InsertRoomTypeException.class})
+    @ExceptionHandler({RuntimeException.class, MethodArgumentNotValidException.class, NotFoundException.class, UserAlreadyExistsException.class, SaveFileException.class, UpdateException.class, UserAlreadyReviewException.class, UserAlreadyReplyException.class, ReplyAlreadyExistsException.class, CreateException.class , InsertRoomTypeException.class , UpdateRoomTypeException.class})
     public ResponseEntity<?> handleException(Exception e) {
         BaseResponse baseResponse = new BaseResponse();
 
         if (e instanceof NotFoundException) {
             baseResponse.setStatusCode(HttpStatus.NOT_FOUND.value());
-        } else if (e instanceof SaveFileException || e instanceof UpdateException || e instanceof UserAlreadyReviewException || e instanceof UserAlreadyReplyException || e instanceof ReplyAlreadyExistsException || e instanceof CreateException || e instanceof BadRequestException || e instanceof InsertRoomTypeException ) {
+        } else if (e instanceof SaveFileException || e instanceof UpdateException || e instanceof UserAlreadyReviewException || e instanceof UserAlreadyReplyException || e instanceof ReplyAlreadyExistsException || e instanceof CreateException || e instanceof BadRequestException || e instanceof InsertRoomTypeException || e instanceof UpdateRoomTypeException) {
             baseResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
         } else {
             baseResponse.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());

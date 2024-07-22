@@ -2,6 +2,7 @@ package com.Thienbao.booking.service;
 
 import com.Thienbao.booking.dto.RoomTypeDto;
 import com.Thienbao.booking.exception.InsertRoomTypeException;
+import com.Thienbao.booking.exception.UpdateRoomTypeException;
 import com.Thienbao.booking.model.RoomType;
 import com.Thienbao.booking.payload.request.InsertRoomTypeRequest;
 import com.Thienbao.booking.payload.request.UpdateRoomTypeRequest;
@@ -63,6 +64,8 @@ public class RoomTypeService implements RoomTypeServiceImp {
 
     @Override
     public RoomType updateRoomType(HttpServletRequest request, UpdateRoomTypeRequest updateRoomTypeRequest, int id) {
-        return null;
+        RoomType roomType = roomTypeRepository.findById(id).orElseThrow(()-> new UpdateRoomTypeException("Không tìm thấy loại phòng" +id));
+        roomType.setName(updateRoomTypeRequest.getName());
+        return roomTypeRepository.save(roomType);
     }
 }
