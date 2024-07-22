@@ -45,5 +45,12 @@ public class RoomTypeController {
             BaseResponse baseResponse = BaseResponse.successBaseResponse(updateRoomTypeRequest , "Cập nhật thành công");
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRoomType(HttpServletRequest request ,@PathVariable int id) {
 
+            roomTypeServiceImp.deleteRoomType(request, id);
+            BaseResponse baseResponse = BaseResponse.successBaseResponse(null ," Xóa loại phòng thành công ");
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+
+    }
 }

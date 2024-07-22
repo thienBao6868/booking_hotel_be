@@ -1,8 +1,10 @@
 package com.Thienbao.booking.service;
 
 import com.Thienbao.booking.dto.RoomTypeDto;
+import com.Thienbao.booking.exception.DeleteException;
 import com.Thienbao.booking.exception.InsertRoomTypeException;
 import com.Thienbao.booking.exception.UpdateRoomTypeException;
+import com.Thienbao.booking.model.Room;
 import com.Thienbao.booking.model.RoomType;
 import com.Thienbao.booking.payload.request.InsertRoomTypeRequest;
 import com.Thienbao.booking.payload.request.UpdateRoomTypeRequest;
@@ -58,7 +60,17 @@ public class RoomTypeService implements RoomTypeServiceImp {
     }
 
     @Override
+    @Transactional
     public void deleteRoomType(HttpServletRequest request, int id) {
+        if (!roomTypeRepository.existsById(id)){
+            throw new DeleteException("Không tìm thấy loại phòng" +id);
+        }
+        List<Room> rooms = roomRepository.findByRoomTypeId(id);
+        for (Room room : rooms){
+            roomAmenitiesRepository.deleteByRoomId(room.getId());
+            roomRepository.delete(room);
+        }
+        roomTypeRepository.deleteById(id);
 
     }
 
