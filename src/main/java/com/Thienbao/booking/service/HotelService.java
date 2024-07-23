@@ -10,6 +10,7 @@ import com.Thienbao.booking.model.HotelAddress;
 import com.Thienbao.booking.model.HotelImage;
 import com.Thienbao.booking.model.User;
 import com.Thienbao.booking.payload.request.InsertHotelRequest;
+import com.Thienbao.booking.payload.request.UpdateHotelRequest;
 import com.Thienbao.booking.repository.HotelAddressRepository;
 import com.Thienbao.booking.repository.HotelImageRepository;
 import com.Thienbao.booking.repository.HotelRepository;
@@ -139,5 +140,60 @@ public class HotelService implements HotelServiceImp {
 
 
     }
+
+    @Transactional
+    @Override
+    public Hotel updateHotel(HttpServletRequest request, UpdateHotelRequest updateHotelRequest) {
+
+       Hotel hotelEntity =   hotelRepository.findById(updateHotelRequest.getHotelID()).orElseThrow(()-> new RuntimeException("Hotel not found"));
+
+
+        hotelEntity.setName(updateHotelRequest.getName());
+        hotelEntity.setDescription(updateHotelRequest.getDescription());
+        hotelEntity.setPhone(updateHotelRequest.getPhone());
+        hotelEntity.setRating(updateHotelRequest.getRating());
+        hotelEntity.setOpenTime(updateHotelRequest.getOpenTime());
+        hotelEntity.setCloseTime(updateHotelRequest.getCloseTime());
+        hotelEntity.setCheckinTime(updateHotelRequest.getCheckInTime());
+        hotelEntity.setCheckoutTime(updateHotelRequest.getCheckOutTime());
+
+        if (updateHotelRequest.getAvatar() != null && !updateHotelRequest.getAvatar().isEmpty()) {
+            fileServiceImp.saveFile(updateHotelRequest.getAvatar());
+            hotelEntity.setAvatar(updateHotelRequest.getAvatar().getOriginalFilename());
+        }
+
+
+        HotelAddress hotelAddress = hotelAddressRepository.findByHotel(hotelEntity)
+                .orElse(new HotelAddress());
+
+
+        hotelAddress.setCity(updateHotelRequest.getCity());
+        hotelAddress.setDistrict(updateHotelRequest.getDistrict());
+        hotelAddress.setCountry(updateHotelRequest.getCountry());
+        hotelAddress.setProvince(updateHotelRequest.getProvince());
+        hotelAddress.setStreetName(updateHotelRequest.getStreetName());
+        hotelAddress.setStreetNumber(updateHotelRequest.getStreetNumber());
+        hotelAddress.setHotel(hotelRepository.save(hotelEntity));
+
+
+        HotelImage hotelImage = hotelImageRepository.findById(hotelEntity)
+                .orElse(new HotelImage());
+        hotelImage.setImageDescription(updateHotelRequest.getImageDesc());
+        hotelImage.setImagePath(updateHotelRequest.getImagePath());
+        hotelImage.setImageTitle(updateHotelRequest.getImageTitle());
+        hotelImage.setUploadDate(updateHotelRequest.getUploadDate());
+        hotelImage.setHotel(hotelEntity);
+
+//        hotelRepository.save(hotelEntity);
+        hotelAddressRepository.save(hotelAddress);
+        hotelImageRepository.save(hotelImage);
+
+
+        return hotelRepository.save(hotelEntity);
+    }
+
+
+
+
 
 }
