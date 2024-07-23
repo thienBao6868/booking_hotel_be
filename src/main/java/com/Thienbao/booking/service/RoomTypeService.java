@@ -14,8 +14,6 @@ import com.Thienbao.booking.repository.RoomTypeRepository;
 import com.Thienbao.booking.service.imp.RoomTypeServiceImp;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,5 +77,19 @@ public class RoomTypeService implements RoomTypeServiceImp {
         RoomType roomType = roomTypeRepository.findById(id).orElseThrow(()-> new UpdateRoomTypeException("Không tìm thấy loại phòng" +id));
         roomType.setName(updateRoomTypeRequest.getName());
         return roomTypeRepository.save(roomType);
+    }
+
+    @Override
+    public List<RoomTypeDto> getIdRoomType(HttpServletRequest request, int id) {
+        List<RoomType> roomTypes = roomTypeRepository.findRoomTypeById(id);
+        List<RoomTypeDto> roomTypeDtos = new ArrayList<>();
+        roomTypes.forEach(item ->{
+            RoomTypeDto roomTypeDto = new RoomTypeDto();
+            roomTypeDto.setId(item.getId());
+            roomTypeDto.setName(item.getName());
+            roomTypeDtos.add(roomTypeDto);
+        });
+
+        return roomTypeDtos;
     }
 }

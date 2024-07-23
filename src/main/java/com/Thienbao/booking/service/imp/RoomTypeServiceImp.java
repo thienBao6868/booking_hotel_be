@@ -13,4 +13,7 @@ public interface RoomTypeServiceImp {
     List<RoomTypeDto> getAllRoomType(HttpServletRequest request);
     void deleteRoomType( HttpServletRequest request ,int id);
     RoomType updateRoomType (HttpServletRequest request , UpdateRoomTypeRequest updateRoomTypeRequest , int id);
+
+
+    List<RoomTypeDto> getIdRoomType(HttpServletRequest request, int id);
 }

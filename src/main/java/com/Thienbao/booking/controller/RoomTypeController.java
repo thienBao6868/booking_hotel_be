@@ -29,6 +29,13 @@ public class RoomTypeController {
         BaseResponse baseResponse = BaseResponse.successBaseResponse(data, "Thành công");
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getIdRoomType(HttpServletRequest request , @PathVariable int id ){
+        List<RoomTypeDto> data = roomTypeServiceImp.getIdRoomType(request, id);
+        BaseResponse baseResponse = BaseResponse.successBaseResponse(data, "Thành công");
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
 
     @PostMapping
     public ResponseEntity<?> insertRoomType (HttpServletRequest request ,@Valid @RequestBody InsertRoomTypeRequest typeRequest) {
