@@ -2,6 +2,7 @@ package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.model.Hotel;
 import com.Thienbao.booking.payload.request.InsertHotelRequest;
+import com.Thienbao.booking.payload.request.UpdateHotelRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.repository.HotelRepository;
 import com.Thienbao.booking.security.DataSecurity;
@@ -78,16 +79,21 @@ public class HotelController {
         return new ResponseEntity<>(hotel,HttpStatus.OK);
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<?> insertHotel1(HttpServletRequest request, InsertHotelRequest hotelRequest) {
 
+    @PutMapping(value ="/{id}",consumes = {"multipart/form-data"})
+    public  ResponseEntity<?> updateHotel(@PathVariable Long id,HttpServletRequest request,@Valid UpdateHotelRequest updateHotelRequest){
 
-        System.out.println(hotelRequest.getOpenTime());
+        updateHotelRequest.setHotelID(Math.toIntExact(id));
+        System.out.println( id);
+        Hotel hotel = hotelServiceImp.updateHotel(request,updateHotelRequest);
 
-        return new ResponseEntity<>(hotelRequest.getCountry(), HttpStatus.OK);
-        // Update hotel
-        // Create Room
-        // update Room
+        return  new ResponseEntity<>(hotel,HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteHotel(@PathVariable Long id){
+
+        hotelService.deleteHotel(id);
+        return ResponseEntity.ok("Delete Succesfull");
+    }
 }

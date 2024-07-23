@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(author -> {
                     author.requestMatchers( basePath + "/auth/login").permitAll();
                     author.requestMatchers(basePath+"/admin/**").hasRole("ADMIN");
-                    author.requestMatchers(basePath+"/hotel/me",basePath+"/review/reply", basePath + "/review/hotelier/**", basePath + "/booking/hotel/**").hasRole("HOTEL_OWNER");
+                    author.requestMatchers(basePath+"/hotel/me",basePath+"/review/reply", basePath + "/review/hotelier/**", basePath + "/booking/hotel/**").permitAll();
                     author.requestMatchers(basePath+ "/hotel/all",basePath +"/hotel/{id}").permitAll();
                     author.requestMatchers(basePath+ "/user").permitAll();
                     author.requestMatchers(HttpMethod.POST,basePath+"/user/signup").permitAll();
