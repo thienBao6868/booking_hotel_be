@@ -45,6 +45,10 @@ public class SecurityConfig {
                     author.requestMatchers(basePath+ "/hotel/all",basePath +"/hotel/{id}").permitAll();
                     author.requestMatchers(basePath+ "/user").permitAll();
                     author.requestMatchers(HttpMethod.POST,basePath+"/user/signup").permitAll();
+                    author.requestMatchers(HttpMethod.POST ,"typeroom").hasRole("HOTEL_OWNER");
+                  //  author.requestMatchers(HttpMethod.DELETE, "typeroom").hasRole("HOTEL_OWNER");
+
+
                     author.anyRequest().authenticated();
                 })
                 .addFilterBefore(customFilterSecurity, UsernamePasswordAuthenticationFilter.class)

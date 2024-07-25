@@ -15,7 +15,7 @@ public class RoomMapper {
         roomDto.setRoomNumber(room.getRoomNumber());
         roomDto.setPrice(room.getPrice());
         roomDto.setStatus(room.getStatus());
-        roomDto.setRoomType(roomTypeMapper.roomTypeConvertToRoomTypeDto(room.getRoomType()));
+       // roomDto.setRoomType(roomTypeMapper.roomTypeConvertToRoomTypeDto(room.getRoomType()));
         return roomDto;
     }
 }
