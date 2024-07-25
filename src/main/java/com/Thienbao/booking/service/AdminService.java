@@ -8,14 +8,18 @@ import com.Thienbao.booking.mapper.HotelMapper;
 import com.Thienbao.booking.mapper.UserMapper;
 import com.Thienbao.booking.model.Hotel;
 import com.Thienbao.booking.model.User;
+import com.Thienbao.booking.payload.request.AdminGetUserByIdUserRequest;
 import com.Thienbao.booking.payload.request.UpdateHotelByAdminRequest;
 import com.Thienbao.booking.payload.request.UpdateUserByAdminRequest;
+import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.repository.HotelRepository;
 import com.Thienbao.booking.repository.UserRepository;
 import com.Thienbao.booking.service.imp.AdminServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class AdminService implements AdminServiceImp {
@@ -51,6 +55,40 @@ public class AdminService implements AdminServiceImp {
     }
 
     @Override
+    public String banUserByAdmin(long id) {
+        Optional<User> user = userRepository.findById(id);
+//        user.ifPresent(u -> {
+//            u.setDeleted(true);
+//            userRepository.save(u);
+//            System.out.println("Banned user");});
+        if(user.isPresent()){
+            User userBanned = user.get();
+            userBanned.setDeleted(true);
+            userRepository.save(userBanned);
+            return "UserID " + id + " is banned!";
+        } else {
+            return "UserID " + id + " is not found.";
+        }
+    }
+
+    @Override
+    public String unbanUserByAdmin(long id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            User checkUserIsBanned = user.get();
+            if (checkUserIsBanned.isDeleted()){
+                checkUserIsBanned.setDeleted(false);
+                userRepository.save(checkUserIsBanned);
+                return  "UserID " + id + " is available now.";
+            } else {
+                return  "UserID " + id + " is not banned.";
+            }
+        } else {
+            return "UserID " + id + " is not found.";
+        }
+    }
+
+    @Override
     public HotelDto updateHotelByAdmin(UpdateHotelByAdminRequest request) {
         Hotel hotel = hotelRepository.findById(request.getHotelId()).orElseThrow(() -> new NotFoundException("Not found hotel with Id: " + request.getHotelId()));
         try {
@@ -59,5 +97,7 @@ public class AdminService implements AdminServiceImp {
         } catch (Exception ex) {
             throw new UpdateException("Error update Hotel By Admin: " + ex.getMessage());
         }
-    };
+    }
+
+
 }
