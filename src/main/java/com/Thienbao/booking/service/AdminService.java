@@ -8,6 +8,7 @@ import com.Thienbao.booking.mapper.HotelMapper;
 import com.Thienbao.booking.mapper.UserMapper;
 import com.Thienbao.booking.model.Hotel;
 import com.Thienbao.booking.model.User;
+import com.Thienbao.booking.payload.request.AdminGetUserByEmailRequest;
 import com.Thienbao.booking.payload.request.AdminGetUserByIdUserRequest;
 import com.Thienbao.booking.payload.request.UpdateHotelByAdminRequest;
 import com.Thienbao.booking.payload.request.UpdateUserByAdminRequest;
@@ -42,6 +43,12 @@ public class AdminService implements AdminServiceImp {
         return userMapper.userConvertToUserDto(user);
     }
 
+    @Override
+    public UserDto getUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        User userFound = user.get();
+        return userMapper.userConvertToUserDto(userFound);
+    }
 
     @Override
     public UserDto updateUserByAdmin(UpdateUserByAdminRequest updateUserByAdminRequest) {

@@ -1,6 +1,7 @@
 package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.dto.UserDto;
+import com.Thienbao.booking.payload.request.AdminGetUserByEmailRequest;
 import com.Thienbao.booking.payload.request.AdminGetUserByIdUserRequest;
 import com.Thienbao.booking.payload.request.UpdateHotelByAdminRequest;
 import com.Thienbao.booking.payload.request.UpdateUserByAdminRequest;
@@ -31,6 +32,16 @@ public class AdminController {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("Get User By Id Successful");
+        baseResponse.setData(userDto);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/find-user-by-email")
+    public ResponseEntity<?> adminGetUserByEmail(@Valid AdminGetUserByEmailRequest adminGetUserByEmailRequest){
+        UserDto userDto = adminServiceImp.getUserByEmail(adminGetUserByEmailRequest.getEmail());
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("Get User by Email Successful.");
         baseResponse.setData(userDto);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
