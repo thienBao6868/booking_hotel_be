@@ -40,8 +40,8 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author -> {
                     author.requestMatchers( basePath + "/auth/login").permitAll();
-                    author.requestMatchers(basePath+"/admin/**").hasRole("ADMIN");
-//                    author.requestMatchers(basePath+"/admin/**").permitAll(); //Test
+//                    author.requestMatchers(basePath+"/admin/**").hasRole("ADMIN");
+                    author.requestMatchers(basePath+"/admin/**").permitAll(); //Test
                     author.requestMatchers(basePath+"/hotel/me",basePath+"/review/reply", basePath + "/review/hotelier/**", basePath + "/booking/hotel/**").hasRole("HOTEL_OWNER");
                     author.requestMatchers(basePath+ "/hotel/all",basePath +"/hotel/{id}").permitAll();
                     author.requestMatchers(basePath+ "/user").permitAll();
