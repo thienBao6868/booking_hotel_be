@@ -68,6 +68,7 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private List<Booking> bookingList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "hotel")
     private List<Room> roomList;
 

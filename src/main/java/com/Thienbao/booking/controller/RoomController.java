@@ -1,14 +1,15 @@
 package com.Thienbao.booking.controller;
 
 import com.Thienbao.booking.dto.RoomDto;
+import com.Thienbao.booking.model.Room;
+import com.Thienbao.booking.payload.request.InsertRoomRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.service.imp.RoomServiceImp;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -26,5 +27,12 @@ public class RoomController {
         baseResponse.setData(listRoomDTO);
 
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+    @PostMapping
+    public ResponseEntity<?> insertRoom(HttpServletRequest request, @RequestBody InsertRoomRequest insertRoomRequest){
+        Room room = roomServiceImp.insertRoom(request, insertRoomRequest);
+        BaseResponse baseResponse = BaseResponse.successBaseResponse(room, "Thêm mới thành công");
+        return new ResponseEntity<>(baseResponse,HttpStatus.OK);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.Thienbao.booking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class RoomType {
     @Column(name = "name",length = 100)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "roomType")
     private List<Room> roomList;
 }
