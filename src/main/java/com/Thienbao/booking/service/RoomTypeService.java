@@ -2,6 +2,7 @@ package com.Thienbao.booking.service;
 
 import com.Thienbao.booking.dto.RoomTypeDto;
 import com.Thienbao.booking.exception.DeleteException;
+import com.Thienbao.booking.exception.GetRoomTypeByIdException;
 import com.Thienbao.booking.exception.InsertRoomTypeException;
 import com.Thienbao.booking.exception.UpdateRoomTypeException;
 import com.Thienbao.booking.model.Room;
@@ -69,7 +70,6 @@ public class RoomTypeService implements RoomTypeServiceImp {
             roomRepository.delete(room);
         }
         roomTypeRepository.deleteById(id);
-
     }
 
     @Override
@@ -80,7 +80,12 @@ public class RoomTypeService implements RoomTypeServiceImp {
     }
 
     @Override
+    @Transactional
     public List<RoomTypeDto> getIdRoomType(HttpServletRequest request, int id) {
+
+        if (!roomTypeRepository.existsById(id)){
+            throw new GetRoomTypeByIdException("Không tìm thấy loại phòng với id" + id);
+        }
         List<RoomType> roomTypes = roomTypeRepository.findRoomTypeById(id);
         List<RoomTypeDto> roomTypeDtos = new ArrayList<>();
         roomTypes.forEach(item ->{
@@ -89,7 +94,6 @@ public class RoomTypeService implements RoomTypeServiceImp {
             roomTypeDto.setName(item.getName());
             roomTypeDtos.add(roomTypeDto);
         });
-
         return roomTypeDtos;
     }
 }

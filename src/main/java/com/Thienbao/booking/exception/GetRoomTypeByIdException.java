@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class DeleteException extends  RuntimeException{
-    private String message ;
+public class GetRoomTypeByIdException extends RuntimeException{
+    private String message;
 }
