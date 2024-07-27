@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class AdminService implements AdminServiceImp {
 
@@ -38,6 +40,12 @@ public class AdminService implements AdminServiceImp {
         return userMapper.userConvertToUserDto(user);
     }
 
+    @Override
+    public UserDto getUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        User userFound = user.get();
+        return userMapper.userConvertToUserDto(userFound);
+    }
 
     @Override
     public UserDto updateUserByAdmin(UpdateUserByAdminRequest updateUserByAdminRequest) {
@@ -60,4 +68,34 @@ public class AdminService implements AdminServiceImp {
             throw new UpdateException("Error update Hotel By Admin: " + ex.getMessage());
         }
     };
+
+    @Override
+    public String banUserByAdmin(long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            User userBanned = user.get();
+            userBanned.setDeleted(true);
+            userRepository.save(userBanned);
+            return "UserID " + id + " is banned!";
+        } else {
+            return "UserID " + id + " is not found.";
+        }
+    }
+
+    @Override
+    public String unbanUserByAdmin(long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()){
+            User unbanUser = user.get();
+            if (unbanUser.isDeleted()){
+                unbanUser.setDeleted(false);
+                userRepository.save(unbanUser);
+                return "UserID " + id + " is available now.";
+            } else {
+                return "UserID " + id + " is not banned.";
+            }
+        } else {
+            return "UserID " + id + " is not found.";
+        }
+    }
 }
