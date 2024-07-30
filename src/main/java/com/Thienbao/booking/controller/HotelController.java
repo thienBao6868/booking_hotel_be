@@ -90,10 +90,4 @@ public class HotelController {
         return  new ResponseEntity<>(hotel,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteHotel(@PathVariable Long id){
-
-        hotelService.deleteHotel(id);
-        return ResponseEntity.ok("Delete Succesfull");
-    }
 }
