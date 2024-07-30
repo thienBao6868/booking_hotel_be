@@ -4,11 +4,13 @@ import com.Thienbao.booking.dto.AmenitiesDto;
 import com.Thienbao.booking.dto.RoomDto;
 import com.Thienbao.booking.dto.RoomTypeDto;
 import com.Thienbao.booking.exception.InsertRoomTypeException;
+import com.Thienbao.booking.exception.UpdateRoomException;
 import com.Thienbao.booking.model.Hotel;
 import com.Thienbao.booking.model.Room;
 import com.Thienbao.booking.model.RoomAmenities;
 import com.Thienbao.booking.model.RoomType;
 import com.Thienbao.booking.payload.request.InsertRoomRequest;
+import com.Thienbao.booking.payload.request.UpdateRoomRequest;
 import com.Thienbao.booking.repository.AmenitiesRepository;
 import com.Thienbao.booking.repository.HotelRepository;
 import com.Thienbao.booking.repository.RoomRepository;
@@ -93,4 +95,24 @@ public class RoomService implements RoomServiceImp {
         room.setHotel(hotel);
         return roomRepository.save(room);
     }
+
+    @Override
+    public Room updateRoom(HttpServletRequest request, int id, UpdateRoomRequest updateRoomRequest) {
+        Room room = roomRepository.findById(id).orElseThrow(()
+                -> new UpdateRoomException("Không tìm thấy phòng với " +id));
+        RoomType roomType = roomTypeRepository.findById(updateRoomRequest.getIdRoomType())
+                .orElseThrow(() -> new InsertRoomTypeException("RoomType không tìm thấy với id: "+ updateRoomRequest.getIdRoomType()));
+        room.setRoomType(roomType);
+        Hotel hotel = hotelRepository.findById(updateRoomRequest.getIdHotel())
+                .orElseThrow(()->new RuntimeException("Hotel không tìm thấy với id: " + updateRoomRequest.getIdHotel()));
+        room.setHotel(hotel);
+        room.setRoomNumber(updateRoomRequest.getNumberRoom());
+        room.setDescription(updateRoomRequest.getDescription());
+        room.setPrice(updateRoomRequest.getPrice());
+        room.setStatus(updateRoomRequest.getStatus());
+
+        return roomRepository.save(room);
+    }
+
 }
+

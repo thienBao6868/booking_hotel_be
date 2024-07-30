@@ -1,5 +1,6 @@
 package com.Thienbao.booking.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,13 +39,14 @@ public class Room {
     @Column(name = "status", columnDefinition = "ENUM('AVAILABLE','BOOKED','OCCUPIED','MAINTENANCE','CLEANING') DEFAULT 'AVAILABLE'")
     private ROOM_STATUS status;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     private List<RoomImage> roomImageList;
 
     @OneToMany(mappedBy = "room")
     private List<BookingRoom> bookingRoomList;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     private List<RoomAmenities> roomAmenitiesList;
 
