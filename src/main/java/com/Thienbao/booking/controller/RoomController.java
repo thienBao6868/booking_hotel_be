@@ -3,6 +3,7 @@ package com.Thienbao.booking.controller;
 import com.Thienbao.booking.dto.RoomDto;
 import com.Thienbao.booking.model.Room;
 import com.Thienbao.booking.payload.request.InsertRoomRequest;
+import com.Thienbao.booking.payload.request.UpdateRoomRequest;
 import com.Thienbao.booking.payload.response.BaseResponse;
 import com.Thienbao.booking.service.imp.RoomServiceImp;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,5 +35,11 @@ public class RoomController {
         BaseResponse baseResponse = BaseResponse.successBaseResponse(room, "Thêm mới thành công");
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
 
+    }
+    @PutMapping({"/id"})
+    public ResponseEntity<?> updateRoom(HttpServletRequest request, @RequestBody UpdateRoomRequest updateRoomRequest , @PathVariable int id) {
+        Room room = roomServiceImp.updateRoom(request, updateRoomRequest, id);
+        BaseResponse baseResponse = BaseResponse.successBaseResponse(room, "Update thành công");
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 }
