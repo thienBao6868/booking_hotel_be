@@ -47,7 +47,14 @@ public class JwtHelper {
         SecretKey secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
         Claims claims;
         try{
-            claims = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+            claims = Jwts.parser()
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+
+
         }catch(RuntimeException ex){
             System.out.println("Error decoding token: " + ex.getMessage());
             return null;
