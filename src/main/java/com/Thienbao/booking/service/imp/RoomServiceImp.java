@@ -13,5 +13,6 @@ public interface RoomServiceImp {
     Room insertRoom(HttpServletRequest request, InsertRoomRequest insertRoomRequest);
 
     Room updateRoom (HttpServletRequest request , UpdateRoomRequest updateRoomRequest , int id );
+    void deleteRoom (HttpServletRequest request , int id );
 
 }

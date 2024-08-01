@@ -36,10 +36,16 @@ public class RoomController {
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
 
     }
-    @PutMapping({"/id"})
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateRoom(HttpServletRequest request, @RequestBody UpdateRoomRequest updateRoomRequest , @PathVariable int id) {
         Room room = roomServiceImp.updateRoom(request, updateRoomRequest, id);
         BaseResponse baseResponse = BaseResponse.successBaseResponse(room, "Update thành công");
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRoom(HttpServletRequest request, @PathVariable int id ){
+        roomServiceImp.deleteRoom(request, id);
+        BaseResponse baseResponse = BaseResponse.successBaseResponse(null , "Xoá phòng thành công");
+        return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }
 }
