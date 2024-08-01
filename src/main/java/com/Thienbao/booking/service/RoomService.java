@@ -3,9 +3,7 @@ package com.Thienbao.booking.service;
 import com.Thienbao.booking.dto.AmenitiesDto;
 import com.Thienbao.booking.dto.RoomDto;
 import com.Thienbao.booking.dto.RoomTypeDto;
-import com.Thienbao.booking.exception.DeleteException;
-import com.Thienbao.booking.exception.InsertRoomTypeException;
-import com.Thienbao.booking.exception.UpdateRoomException;
+import com.Thienbao.booking.exception.*;
 import com.Thienbao.booking.model.*;
 import com.Thienbao.booking.payload.request.InsertRoomRequest;
 import com.Thienbao.booking.payload.request.UpdateRoomRequest;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -129,5 +128,45 @@ public class RoomService implements RoomServiceImp {
         }
         roomRepository.deleteById(id);
     }
+
+    @Override
+    public RoomDto getRoomById(HttpServletRequest request, int id) {
+        if (!roomRepository.existsById(id)){
+            throw new GetRoomByIdException ("Không tìm thấy phòng với id là " + id);
+        }
+        Room room = roomRepository.findById(id)
+                .orElseThrow(()-> new GetRoomByIdException("Không tìm thấy phòng với id " + id));
+
+            RoomDto roomDto = new RoomDto();
+
+        roomDto.setNameHotel(room.getHotel().getName());
+
+        RoomTypeDto roomTypeDto = new RoomTypeDto();
+        roomTypeDto.setId(room.getRoomType().getId());
+        roomTypeDto.setName(room.getRoomType().getName());
+        roomDto.setRoomType(Collections.singletonList(roomTypeDto));
+
+        roomDto.setRoomNumber(room.getRoomNumber());
+        roomDto.setPrice(room.getPrice());
+
+        List<AmenitiesDto> amenitiesDTOList = new ArrayList<>();
+        for (RoomAmenities roomAmenity : room.getRoomAmenitiesList()) {
+            AmenitiesDto amenitiesDTO = new AmenitiesDto();
+            amenitiesDTO.setId(roomAmenity.getAmenity().getId());
+            amenitiesDTO.setName(roomAmenity.getAmenity().getName());
+            amenitiesDTO.setIcon(roomAmenity.getAmenity().getIcon());
+            amenitiesDTOList.add(amenitiesDTO);
+        }
+        roomDto.setAmenities(amenitiesDTOList);
+        List<String> images = new ArrayList<>();
+        room.getRoomImageList().forEach(itemImage -> {
+            images.add(itemImage.getImagePath());
+        });
+        roomDto.setImage(images);
+        roomDto.setStatus(room.getStatus());
+
+        return roomDto;
+    }
+
 
 }

@@ -48,4 +48,11 @@ public class RoomController {
         BaseResponse baseResponse = BaseResponse.successBaseResponse(null , "Xoá phòng thành công");
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getRoomById (HttpServletRequest request , @PathVariable int id ){
+        RoomDto roomDto = roomServiceImp.getRoomById(request, id);
+        BaseResponse baseResponse = BaseResponse.successBaseResponse(roomDto , "Thành công ");
+        return new ResponseEntity<>(baseResponse,HttpStatus.OK);
+    }
 }
+
