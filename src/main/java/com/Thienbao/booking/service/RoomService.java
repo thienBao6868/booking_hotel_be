@@ -3,22 +3,18 @@ package com.Thienbao.booking.service;
 import com.Thienbao.booking.dto.AmenitiesDto;
 import com.Thienbao.booking.dto.RoomDto;
 import com.Thienbao.booking.dto.RoomTypeDto;
+import com.Thienbao.booking.exception.DeleteException;
 import com.Thienbao.booking.exception.InsertRoomTypeException;
 import com.Thienbao.booking.exception.UpdateRoomException;
-import com.Thienbao.booking.model.Hotel;
-import com.Thienbao.booking.model.Room;
-import com.Thienbao.booking.model.RoomAmenities;
-import com.Thienbao.booking.model.RoomType;
+import com.Thienbao.booking.model.*;
 import com.Thienbao.booking.payload.request.InsertRoomRequest;
 import com.Thienbao.booking.payload.request.UpdateRoomRequest;
-import com.Thienbao.booking.repository.AmenitiesRepository;
-import com.Thienbao.booking.repository.HotelRepository;
-import com.Thienbao.booking.repository.RoomRepository;
-import com.Thienbao.booking.repository.RoomTypeRepository;
+import com.Thienbao.booking.repository.*;
 import com.Thienbao.booking.service.imp.RoomServiceImp;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +28,10 @@ public class RoomService implements RoomServiceImp {
     private HotelRepository hotelRepository;
     @Autowired
     private RoomTypeRepository roomTypeRepository;
+    @Autowired
+    private RoomAmenitiesRepository roomAmenitiesRepository;
+    @Autowired
+    private RoomImageRepository roomImageRepository;
 
     @Override
     public List<RoomDto> getAllRoom() {
@@ -111,6 +111,23 @@ public class RoomService implements RoomServiceImp {
         room.setPrice(updateRoomRequest.getPrice());
         room.setStatus(updateRoomRequest.getStatus());
         return roomRepository.save(room);
+    }
+
+    @Override
+    @Transactional
+    public void deleteRoom(HttpServletRequest request, int id) {
+        if (!roomRepository.existsById(id)){
+            throw new DeleteException("Không tìm thấy phòng với id " +id);
+        }
+        List<RoomAmenities> roomAmenities = roomAmenitiesRepository.findByRoomId(id);
+        for (RoomAmenities roomAmenities1 :roomAmenities){
+            roomAmenitiesRepository.delete(roomAmenities1);
+        }
+        List<RoomImage> roomImages = roomImageRepository.findByRoomId(id);
+        for (RoomImage image : roomImages){
+            roomImageRepository.delete(image);
+        }
+        roomRepository.deleteById(id);
     }
 
 }

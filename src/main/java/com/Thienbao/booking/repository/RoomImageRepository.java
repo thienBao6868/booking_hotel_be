@@ -1,6 +1,7 @@
 package com.Thienbao.booking.repository;
 
-import com.Thienbao.booking.model.RoomAmenities;
+import com.Thienbao.booking.model.RoomImage;
+import com.Thienbao.booking.model.RoomType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,9 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface RoomAmenitiesRepository extends JpaRepository<RoomAmenities , Integer> {
+
+public interface RoomImageRepository extends JpaRepository<RoomImage , Integer> {
     @Transactional
-    void deleteByRoomId(int RoomId);
+    void deleteByRoomId(int roomId);
     @Transactional
-    List <RoomAmenities> findByRoomId(int roomId);
+    List<RoomImage> findByRoomId(int roomId);
 }
